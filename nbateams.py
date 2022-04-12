@@ -110,4 +110,13 @@ def houston():
     return houston_list
 
 def memphis():
-    memphis_list = ["Ja Morant", "Desmond Bane", "Ziare Williams", "Jaren Jackson Jr.", "St"]
+    memphis_list = ["Ja Morant", "Desmond Bane", "Ziare Williams", "Jaren Jackson Jr.", "Steven Adams"]
+    return memphis_list
+
+def new_orleans():
+    new_orleans_list = ["Devonte' Graham", "C.J. McCollum", "Brandon Ingram", "Zion Williamson", "Jonas Valamciunas"]
+    return new_orleans_list
+
+def san_antonio():
+    san_antonio_list = ["Dejounte Murray", "Devin Vassell", "Doug McDermott", "Keldon Johnson", "Jakob Poeltl"]
+    return san_antonio_list
