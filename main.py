@@ -1,6 +1,6 @@
-from cProfile import label
 import nbateams
 from tkinter import *
+import random
 
 
 class BasketballSupport:
@@ -16,8 +16,15 @@ class BasketballProgram:
     def __init__(self, parent):
         self.welcomeframe = Frame(parent)
         self.standingsframe = Frame(parent)
+        self.choosingframe = Frame(parent)
+        self.homeframe = Frame(parent)
+
+
         self.west_teams = []
         self.east_teams = []
+        self.allnames = []
+        self.allteams = []
+        self.chosenteamvar = StringVar()
 
         self.east_teams.append(BasketballSupport("Boston Celtics", "Atlantic", nbateams.boston, 0, 0))
         self.east_teams.append(BasketballSupport("Brooklyn Nets", "Atlantic", nbateams.brooklyn, 0, 0))
@@ -54,34 +61,98 @@ class BasketballProgram:
 
         welcome_label = Label(self.welcomeframe, text = "Welcome to NBA simulator 2022")
         welcome_label.grid(row = 0, column = 0, padx =  10, pady = 20)
-        sim_button = Button(self.welcomeframe, text = "Start Season", command = self.newseason)
+        sim_button = Button(self.welcomeframe, text = "Start Season", command = self.changing(self.welcomeframe, self.choosingframe))
         sim_button.grid(row =1, column=0, padx = 10, pady = 20)
         self.welcomeframe.pack()
-        standing_count = 0
-        stats_east = Label(self.standingsframe, text = "Eastern Confrence")
-        stats_east.grid(row = 0, column=0, pady= 20)
-        
-        """for i in range(self.east_teams):
-            self.east_teams[]"""
 
-
+        choose_label = Label(self.choosingframe, text = "Would you like to follow a team or just watch? ")
+        choose_label.grid(row = 0, columnspan = 2, padx = 10, pady = 20)
         for i in range(len(self.east_teams)):
-            standing_count += 1
-            label_east = Label(self.standingsframe, text = str(i+ 1) + ". " + self.east_teams[i].name + str(self.east_teams[i].wins) + str(self.east_teams[i].losses), anchor = W)
-            label_east.grid(row = i+1, column = 0)
-        stats_west = Label(self.standingsframe, text = "Western Confrence")
-        stats_west.grid(row = standing_count + 1, column=0, pady = 20)
-
-        for i in range(len(self.west_teams)):
-            standing_count += 1
-            label_west = Label(self.standingsframe, text = self.west_teams[i].name, anchor = W)
-            label_west.grid(row = standing_count+ 1, column = 0)
-        
+            self.allnames.append(self.east_teams[i].name)
+            self.allnames.append(self.west_teams[i].name)
+            self.allteams.append(self.east_teams[i])
+            self.allteams.append(self.west_teams[i])
         
 
-    def newseason(self):
-        self.welcomeframe.pack_forget()
-        self.standingsframe.pack()
+
+
+
+        choose_team_menu = OptionMenu(self.choosingframe, self.chosenteamvar, *self.allnames, command = self.changing(self.choosingframe, self.homeframe))
+        choose_team_menu.grid(row = 1, column= 0, padx = 10, pady = 20)
+        simall = Button(self.choosingframe, text = "Simulate whole league", command=self.wholeleague)
+        simall.grid(row=1, column=1, padx = 10, pady = 20)
+        play_next = self.nextteam()
+
+
+        self.nextgame_label = Label(self.homeframe, text = "Next game: ")
+
+
+
+
+        
+        self.standing_count = 0
+        stats_east = Label(self.standingsframe, text = "Eastern Confrence", relief=RIDGE, bd = 5)
+        stats_east.grid(row = 0, column=0, pady= 20)
+        wins_east = Label(self.standingsframe, text = "Wins", relief=RIDGE, bd = 5)
+        wins_east.grid(row = 0, column = 1, pady=20)
+        loss_east = Label(self.standingsframe, text = "Losses", relief=RIDGE, bd = 5)
+        loss_east.grid(row = 0, column = 2, pady = 20, padx = 10)
+        pct_east = Label(self.standingsframe, text = "Winning PCT%", relief=RIDGE, bd = 5)
+        pct_east.grid(row = 0, column = 3, pady = 20, padx = 10)
+        self.leagueleaders(self.east_teams)
+
+
+        stats_west = Label(self.standingsframe, text = "Western Confrence", relief=RIDGE, bd = 5)
+        stats_west.grid(row = self.standing_count+1, column=0, pady= 20, padx = 10)
+        wins_west = Label(self.standingsframe, text = "Wins", relief=RIDGE, bd = 5)
+        wins_west.grid(row = self.standing_count+1, column = 1, pady=20, padx = 10)
+        loss_west = Label(self.standingsframe, text = "Losses", relief=RIDGE, bd = 5)
+        loss_west.grid(row = self.standing_count+1, column = 2)
+        pct_west = Label(self.standingsframe, text = "Winning PCT%", relief=RIDGE, bd = 5)
+        pct_west.grid(row = self.standing_count+1, column = 3, pady = 20, padx = 10)
+        self.standing_count+=1
+        self.leagueleaders(self.west_teams)
+    
+
+    def nexttime(self):
+        for t in self.allteams:
+            if t.name == self.chosenteamvar.get():
+                self.allteams.pop(t)
+                next = random.choice(self.allteams)
+                self.allteams.pop(next)
+                return next
+
+    
+
+
+    def leagueleaders(self, teams):
+        teams.sort(key = lambda x: x.wins)
+        winning = 0
+        for t in teams:
+
+            self.standing_count +=1
+            winning+=1
+            team_label = Label(self.standingsframe, text = str(winning) + ". " + t.name)
+            team_label.grid(row=self.standing_count, column = 0, padx = 10)
+            wins_label = Label(self.standingsframe, text = str(t.wins))
+            wins_label.grid(row = self.standing_count, column=1, padx = 10)
+            loss_label = Label(self.standingsframe, text = str(t.losses))
+            loss_label.grid(row = self.standing_count, column = 2, padx = 10)
+            if t.wins + t.losses > 0:
+
+                pct_label = Label(self.standingsframe, text = str(t.wins/(t.wins+t.losses)),)
+                pct_label.grid(row = self.standing_count, column= 3, padx = 10)
+            else:
+                pct_label = Label(self.standingsframe, text = "1")
+                pct_label.grid(row = self.standing_count, column = 3, padx = 10)
+
+
+
+        
+
+    def changing(self, f1, f2):
+        f1.pack_forget()
+        f2.pack()
 
 
 if __name__ == "__main__":

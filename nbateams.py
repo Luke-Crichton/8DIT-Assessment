@@ -1,6 +1,3 @@
-
-
-
 def boston():
     boston_list = ["Marcus Smart", "Jaylen Brown", "Jayson Tatum", "Al Hordford", "Robert Williams III"]
     return boston_list
