@@ -1,5 +1,6 @@
 import nbateams
 from tkinter import *
+import random
 
 
 class BasketballSupport:
@@ -16,10 +17,14 @@ class BasketballProgram:
         self.welcomeframe = Frame(parent)
         self.standingsframe = Frame(parent)
         self.choosingframe = Frame(parent)
+        self.homeframe = Frame(parent)
+
 
         self.west_teams = []
         self.east_teams = []
+        self.allnames = []
         self.allteams = []
+        self.chosenteamvar = StringVar()
 
         self.east_teams.append(BasketballSupport("Boston Celtics", "Atlantic", nbateams.boston, 0, 0))
         self.east_teams.append(BasketballSupport("Brooklyn Nets", "Atlantic", nbateams.brooklyn, 0, 0))
@@ -56,28 +61,35 @@ class BasketballProgram:
 
         welcome_label = Label(self.welcomeframe, text = "Welcome to NBA simulator 2022")
         welcome_label.grid(row = 0, column = 0, padx =  10, pady = 20)
-        sim_button = Button(self.welcomeframe, text = "Start Season", command = self.newseason)
+        sim_button = Button(self.welcomeframe, text = "Start Season", command = self.changing(self.welcomeframe, self.choosingframe))
         sim_button.grid(row =1, column=0, padx = 10, pady = 20)
+        self.welcomeframe.pack()
 
         choose_label = Label(self.choosingframe, text = "Would you like to follow a team or just watch? ")
         choose_label.grid(row = 0, columnspan = 2, padx = 10, pady = 20)
         for i in range(len(self.east_teams)):
-            self.allteams.append(self.east_teams[i].name)
-            self.allteams.append(self.west_teams[i].name)
+            self.allnames.append(self.east_teams[i].name)
+            self.allnames.append(self.west_teams[i].name)
+            self.allteams.append(self.east_teams[i])
+            self.allteams.append(self.west_teams[i])
+        
 
 
 
 
-        choose_team_menu = OptionMenu(self.choosingframe, *self.allteams, self.chosen)
+        choose_team_menu = OptionMenu(self.choosingframe, self.chosenteamvar, *self.allnames, command = self.changing(self.choosingframe, self.homeframe))
         choose_team_menu.grid(row = 1, column= 0, padx = 10, pady = 20)
-        simall = Button(self.choosingframe, text = "Simulate whole league")
-        sim_button.grid(row=1, column=1, padx = 10, pady = 20)
+        simall = Button(self.choosingframe, text = "Simulate whole league", command=self.wholeleague)
+        simall.grid(row=1, column=1, padx = 10, pady = 20)
+        play_next = self.nextteam()
+
+
+        self.nextgame_label = Label(self.homeframe, text = "Next game: ")
 
 
 
 
-
-        self.welcomeframe.pack()
+        
         self.standing_count = 0
         stats_east = Label(self.standingsframe, text = "Eastern Confrence", relief=RIDGE, bd = 5)
         stats_east.grid(row = 0, column=0, pady= 20)
@@ -100,7 +112,17 @@ class BasketballProgram:
         pct_west.grid(row = self.standing_count+1, column = 3, pady = 20, padx = 10)
         self.standing_count+=1
         self.leagueleaders(self.west_teams)
-       
+    
+
+    def nexttime(self):
+        for t in self.allteams:
+            if t.name == self.chosenteamvar.get():
+                self.allteams.pop(t)
+                next = random.choice(self.allteams)
+                self.allteams.pop(next)
+                return next
+
+    
 
 
     def leagueleaders(self, teams):
@@ -128,9 +150,9 @@ class BasketballProgram:
 
         
 
-    def newseason(self):
-        self.welcomeframe.pack_forget()
-        self.choosingframe.pack()
+    def changing(self, f1, f2):
+        f1.pack_forget()
+        f2.pack()
 
 
 if __name__ == "__main__":
