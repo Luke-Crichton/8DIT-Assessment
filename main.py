@@ -112,9 +112,9 @@ class BasketballProgram:
         pct_west.grid(row = self.standing_count+1, column = 3, pady = 20, padx = 10)
         self.standing_count+=1
         self.leagueleaders(self.west_teams)
-    
-
-    def nexttime(self):
+    def wholeleague(self):
+        pass
+    def nextteam(self):
         for t in self.allteams:
             if t.name == self.chosenteamvar.get():
                 self.allteams.pop(t)
@@ -145,14 +145,10 @@ class BasketballProgram:
             else:
                 pct_label = Label(self.standingsframe, text = "1")
                 pct_label.grid(row = self.standing_count, column = 3, padx = 10)
-
-
-
-        
-
-    def changing(self, f1, f2):
-        f1.pack_forget()
-        f2.pack()
+    def changing(self, frame1, frame2):
+        print("Hello World")
+        frame1.pack_forget()
+        frame2.pack()
 
 
 if __name__ == "__main__":
