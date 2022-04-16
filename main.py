@@ -25,6 +25,7 @@ class BasketballProgram:
         self.allnames = []
         self.allteams = []
         self.chosenteamvar = StringVar()
+        self.schedule = []
 
         self.east_teams.append(BasketballSupport("Boston Celtics", "Atlantic", nbateams.boston, 0, 0))
         self.east_teams.append(BasketballSupport("Brooklyn Nets", "Atlantic", nbateams.brooklyn, 0, 0))
@@ -61,7 +62,7 @@ class BasketballProgram:
 
         welcome_label = Label(self.welcomeframe, text = "Welcome to NBA simulator 2022")
         welcome_label.grid(row = 0, column = 0, padx =  10, pady = 20)
-        sim_button = Button(self.welcomeframe, text = "Start Season", command = self.changing(self.welcomeframe, self.choosingframe))
+        sim_button = Button(self.welcomeframe, text = "Start Season", command = self.changetochoose)
         sim_button.grid(row =1, column=0, padx = 10, pady = 20)
         self.welcomeframe.pack()
 
@@ -77,14 +78,20 @@ class BasketballProgram:
 
 
 
-        choose_team_menu = OptionMenu(self.choosingframe, self.chosenteamvar, *self.allnames, command = self.changing(self.choosingframe, self.homeframe))
+        choose_team_menu = OptionMenu(self.choosingframe, self.chosenteamvar, *self.allnames, command = self.changetohome)
         choose_team_menu.grid(row = 1, column= 0, padx = 10, pady = 20)
         simall = Button(self.choosingframe, text = "Simulate whole league", command=self.wholeleague)
         simall.grid(row=1, column=1, padx = 10, pady = 20)
-        play_next = self.nextteam()
+        
+        self.gamenum = 0
+        
+        self.nextteam()
+        random.shuffle(self.schedule)
+        
+        
+        self.nextgame_label = Label(self.homeframe, text = "Next game: " + self.schedule[self.gamenum].name)
+        self.nextgame_label.grid(row = 0, column=0, padx = 10, pady = 20)
 
-
-        self.nextgame_label = Label(self.homeframe, text = "Next game: ")
 
 
 
@@ -117,10 +124,10 @@ class BasketballProgram:
     def nextteam(self):
         for t in self.allteams:
             if t.name == self.chosenteamvar.get():
-                self.allteams.pop(t)
-                next = random.choice(self.allteams)
-                self.allteams.pop(next)
-                return next
+                self.allteams.remove(t)
+
+            else:
+                self.schedule.append(t)
 
     
 
@@ -145,10 +152,13 @@ class BasketballProgram:
             else:
                 pct_label = Label(self.standingsframe, text = "1")
                 pct_label.grid(row = self.standing_count, column = 3, padx = 10)
-    def changing(self, frame1, frame2):
-        print("Hello World")
-        frame1.pack_forget()
-        frame2.pack()
+    def changetochoose(self):
+        self.welcomeframe.pack_forget()
+        self.choosingframe.pack()
+    def changetohome(self, x):
+        self.choosingframe.pack_forget()
+        self.homeframe.pack()
+        
 
 
 if __name__ == "__main__":
