@@ -87,11 +87,14 @@ class BasketballProgram:
         
         self.nextteam()
         random.shuffle(self.schedule)
+        print(self.team_chosen[1].name)
         
         
         self.nextgame_label = Label(self.homeframe, text = "Next game: " + self.schedule[self.gamenum].name)
-        self.nextgame_label.grid(row = 0, column=0, padx = 10, pady = 20)
+        self.nextgame_label.grid(row = 0, columnspan=3, padx = 10, pady = 20)
 
+        self.record_label = Label(self.homeframe, text = str(self.userteam.wins) + " - " + str(self.userteam.losses))
+        self.record_label.gird(row = 1, column = 1, padx = 10, pady = 20)
 
 
 
@@ -124,6 +127,7 @@ class BasketballProgram:
     def nextteam(self):
         for t in self.allteams:
             if t.name == self.chosenteamvar.get():
+                self.userteam = t
                 self.allteams.remove(t)
 
             else:
