@@ -1,4 +1,3 @@
-from click import command
 import nbateams
 from tkinter import *
 import random
@@ -19,6 +18,7 @@ class BasketballProgram:
         self.standingsframe = Frame(parent)
         self.choosingframe = Frame(parent)
         self.homeframe = Frame(parent)
+        self.gameframe = Frame(parent)
 
 
         self.west_teams = []
@@ -30,7 +30,7 @@ class BasketballProgram:
         
         self.atlanticdiv = []
         self.centraldiv = []
-        self.souteastdiv = []
+        self.southeastdiv = []
 
         self.pacificdiv = []
         self.northwestdiv = []
@@ -93,8 +93,8 @@ class BasketballProgram:
                 self.atlanticdiv.append(d)
             elif d.division == "Central":
                 self.centraldiv.append(d)
-            elif d.division == "Souteast":
-                self.souteastdiv.append(d)
+            elif d.division == "Southeast":
+                self.southeastdiv.append(d)
             elif d.division == "Pacific":
                 self.pacificdiv.append(d)
             elif d.division == "Northwest":
@@ -113,12 +113,6 @@ class BasketballProgram:
         
         self.gamenum = 0
         
-        
-        
-        
-        
-        
-
 
 
 
@@ -263,7 +257,39 @@ class BasketballProgram:
 
     
     def changetogame(self):
-        pass
+        self.homeframe.pack_forget()
+        self.gameframe.pack()
+        self.homescore = 0
+        self.awayscore = 0
+        self.away_label = Label(self.gameframe, text = self.schedule[self.gamenum].name + ": " + str(self.awayscore))
+        self.away_label.grid(row=0, column=0, padx = 10, pady = 20)
+        self.home_label = Label(self.gameframe, text = self.userteam.name +  ": " + str(self.homescore))
+        self.home_label.grid(row = 0, column=1, padx=10, pady =20)
+        
+        self.playervar = StringVar()
+        self.playervar.set(" ")
+        awayrb_count = 1
+        for i in self.schedule[self.gamenum].players():
+            awayrb = Radiobutton(self.gameframe,value = i, text=i, variable=self.playervar)
+            awayrb.grid(row = awayrb_count, column=0, padx = 5, pady = 10)
+            awayrb_count+=1
+        
+
+        
+        homerb_count = 1
+        for i in self.userteam.players():
+            homerb = Radiobutton(self.gameframe, value = i, text = i, variable=self.playervar)
+            homerb.grid(row = homerb_count, column=1, padx = 5, pady=10)
+            homerb_count+=1
+        
+
+
+        self.threept = Button(self.gameframe, )
+       
+
+        
+
+
 
 
 
