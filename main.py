@@ -1,3 +1,4 @@
+from click import command
 import nbateams
 from tkinter import *
 import random
@@ -26,6 +27,20 @@ class BasketballProgram:
         self.allteams = []
         self.chosenteamvar = StringVar()
         self.schedule = []
+        
+        self.atlanticdiv = []
+        self.centraldiv = []
+        self.souteastdiv = []
+
+        self.pacificdiv = []
+        self.northwestdiv = []
+        self.southwestdiv = []
+
+
+
+
+
+
 
         self.east_teams.append(BasketballSupport("Boston Celtics", "Atlantic", nbateams.boston, 0, 0))
         self.east_teams.append(BasketballSupport("Brooklyn Nets", "Atlantic", nbateams.brooklyn, 0, 0))
@@ -73,6 +88,19 @@ class BasketballProgram:
             self.allnames.append(self.west_teams[i].name)
             self.allteams.append(self.east_teams[i])
             self.allteams.append(self.west_teams[i])
+        for d in self.allteams:
+            if d.division == "Atlantic":
+                self.atlanticdiv.append(d)
+            elif d.division == "Central":
+                self.centraldiv.append(d)
+            elif d.division == "Souteast":
+                self.souteastdiv.append(d)
+            elif d.division == "Pacific":
+                self.pacificdiv.append(d)
+            elif d.division == "Northwest":
+                self.northwestdiv.append(d)
+            else:
+                self.southwestdiv.append(d)
         
 
 
@@ -85,30 +113,27 @@ class BasketballProgram:
         
         self.gamenum = 0
         
-        self.nextteam()
-        random.shuffle(self.schedule)
-        print(self.team_chosen[1].name)
         
         
-        self.nextgame_label = Label(self.homeframe, text = "Next game: " + self.schedule[self.gamenum].name)
-        self.nextgame_label.grid(row = 0, columnspan=3, padx = 10, pady = 20)
-
-        self.record_label = Label(self.homeframe, text = str(self.userteam.wins) + " - " + str(self.userteam.losses))
-        self.record_label.gird(row = 1, column = 1, padx = 10, pady = 20)
+        
+        
+        
 
 
 
 
         
-        self.standing_count = 0
+        self.standing_count = 1
+        self.tablebacktobhome = Button(self.standingsframe, text = "Back to Home Frame", command = self.changebacktohome)
+        self.tablebacktobhome.grid(row = 0, column=0, padx=10, pady = 5)
         stats_east = Label(self.standingsframe, text = "Eastern Confrence", relief=RIDGE, bd = 5)
-        stats_east.grid(row = 0, column=0, pady= 20)
+        stats_east.grid(row = 1, column=0, pady= 20)
         wins_east = Label(self.standingsframe, text = "Wins", relief=RIDGE, bd = 5)
-        wins_east.grid(row = 0, column = 1, pady=20)
+        wins_east.grid(row = 1, column = 1, pady=20)
         loss_east = Label(self.standingsframe, text = "Losses", relief=RIDGE, bd = 5)
-        loss_east.grid(row = 0, column = 2, pady = 20, padx = 10)
+        loss_east.grid(row = 1, column = 2, pady = 20, padx = 10)
         pct_east = Label(self.standingsframe, text = "Winning PCT%", relief=RIDGE, bd = 5)
-        pct_east.grid(row = 0, column = 3, pady = 20, padx = 10)
+        pct_east.grid(row = 1, column = 3, pady = 20, padx = 10)
         self.leagueleaders(self.east_teams)
 
 
@@ -122,13 +147,19 @@ class BasketballProgram:
         pct_west.grid(row = self.standing_count+1, column = 3, pady = 20, padx = 10)
         self.standing_count+=1
         self.leagueleaders(self.west_teams)
+
+
     def wholeleague(self):
         pass
+
+
+
+
     def nextteam(self):
         for t in self.allteams:
             if t.name == self.chosenteamvar.get():
-                self.userteam = t
-                self.allteams.remove(t)
+                root.title(t.name)
+                return t
 
             else:
                 self.schedule.append(t)
@@ -156,12 +187,91 @@ class BasketballProgram:
             else:
                 pct_label = Label(self.standingsframe, text = "1")
                 pct_label.grid(row = self.standing_count, column = 3, padx = 10)
+    
+
+    def divisionleaders(self):
+        if self.userteam.division == "Atlantic":
+            self.atlanticdiv.sort(key = lambda x:x.wins)
+            return self.atlanticdiv.index(self.userteam)
+        elif self.userteam.division == "Central":
+            self.centraldiv.sort(key = lambda x:x.wins)
+            return self.centraldiv.index(self.userteam)
+        elif self.userteam.division == "Southeast":
+            self.southeastdiv.sort(key = lambda x:x.wins)
+            return self.southeastdiv.index(self.userteam)
+        elif self.userteam.division == "Pacific":
+            self.pacificdiv.sort(key = lambda x:x.wins)
+            return self.pacificdiv.index(self.userteam)
+        elif self.userteam.division == "Northwest":
+            self.northwestdiv.sort(key = lambda x:x.wins)
+            return self.northwestdiv.index(self.userteam)
+        elif self.userteam.division == "Southwest":
+            self.southwestdiv.sort(key = lambda x:x.wins)
+            return self.southwestdiv.index(self.userteam)
+
+
+            
+
+
+    
     def changetochoose(self):
         self.welcomeframe.pack_forget()
         self.choosingframe.pack()
+    
     def changetohome(self, x):
         self.choosingframe.pack_forget()
         self.homeframe.pack()
+        self.userteam = self.nextteam()
+        random.shuffle(self.schedule)
+        self.nextgame_label = Label(self.homeframe, text = "Next game: " + self.schedule[self.gamenum].name)
+        self.nextgame_label.grid(row = 0, columnspan=3, padx = 10, pady = 20)
+        self.div_pos = self.divisionleaders()
+        self.record_label = Label(self.homeframe, text = "Record: " + str(self.userteam.wins) + " - " + str(self.userteam.losses))
+        self.record_label.grid(row = 1, column = 0, padx = 10, pady = 20)
+        self.division_label = Label(self.homeframe, text = "Division Standing: " +str(self.div_pos+1)+"/5") 
+        self.division_label.grid(row = 1, column = 1, padx = 10, pady = 20)
+
+        self.confrence_label = Label(self.homeframe, text="")
+        self.confrence_label.grid(row = 1, column=2, padx = 10, pady =20)
+        if self.userteam.division == "Pacific" or self.userteam.division == "Northwest" or self.userteam.division == "Southwest":
+            self.westcon_pos = self.west_teams.index(self.userteam)
+            self.confrence_label.configure(text ="Confrence Standing: "+ str(self.westcon_pos+1) +"/15")
+        else:
+            self.eastcon_pos = self.east_teams.index(self.userteam)
+            self.confrence_label.configure(text = "Confrence Standing: " +str(self.eastcon_pos+1)+ "/15")
+        self.table = Button(self.homeframe, text = "League Standings", command=self.changetotable)
+        self.table.grid(row =2, column = 0, padx=10, pady = 20)
+        self.stats_but = Button(self.homeframe, text = "Player Stats", command=self.changetostats)
+        self.stats_but.grid(row = 2, column=1, padx=10, pady =20)
+        self.playgame = Button(self.homeframe, text = "Play Next Game", command=self.changetogame)
+        self.playgame.grid(row = 2, column=2, padx = 10, pady=20)
+    
+
+
+    def changetotable(self):
+        self.homeframe.pack_forget()
+        self.standingsframe.pack()
+
+    
+    def changebacktohome(self):
+        self.standingsframe.pack_forget()
+        self.homeframe.pack()
+
+    
+    def changetostats(self):
+        pass
+
+    
+    def changetogame(self):
+        pass
+
+
+
+        
+
+
+        
+        
         
 
 
