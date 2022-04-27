@@ -60,7 +60,7 @@ class BasketballProgram:
 
         self.west_teams.append(BasketballSupport("Golden State Warriors", "Pacific", nbateams.golden, 0, 0))
         self.west_teams.append(BasketballSupport("Los Angeles Clippers", "Pacific", nbateams.lac, 0, 0))
-        self.west_teams.append(BasketballSupport("Los Angeles Lakers", "Pacific", nbateams.lac, 0, 0))
+        self.west_teams.append(BasketballSupport("Los Angeles Lakers", "Pacific", nbateams.lal, 0, 0))
         self.west_teams.append(BasketballSupport("Pheonix Suns", "Pacific", nbateams.pheonix, 0, 0))
         self.west_teams.append(BasketballSupport("Sacramento Kings", "Pacific", nbateams.sac, 0, 0))
         self.west_teams.append(BasketballSupport("Denver Nuggets", "Northwest", nbateams.denver, 0, 0))
@@ -284,22 +284,18 @@ class BasketballProgram:
         
 
 
-        self.threept = Button(self.gameframe, )
-       
-
-        
-
-
-
-
-
-        
-
-
-        
-        
-        
-
+        self.threept = Button(self.gameframe, text = "3pt", command = self.addpoints)
+        self.threept.grid(row = homerb_count+1, column = 0, padx = 10, pady = 20)
+    
+    def addpoints(self, num):
+        print("Hello World")
+        print(self.playervar.get())
+        if self.playervar.get() in self.userteam.players():
+            self.homescore+=num
+            self.home_label.configure(text = self.userteam.name +  ": " + str(self.homescore))
+        elif self.playervar.get() in self.schedule[self.gamenum].players():
+            self.awayscore+=num
+            self.away_label.configure(text = self.schedule[self.gamenum].name + ": " + str(self.awayscore))
 
 if __name__ == "__main__":
     root = Tk()
