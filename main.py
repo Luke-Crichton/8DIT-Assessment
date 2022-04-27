@@ -272,12 +272,10 @@ class BasketballProgram:
         
 
 
-        self.threept = Button(self.gameframe, text = "3pt", command = self.addpoints)
+        self.threept = Button(self.gameframe, text = "3pt", command = lambda: self.addpoints(3))
         self.threept.grid(row = homerb_count+1, column = 0, padx = 10, pady = 20)
     
     def addpoints(self, num):
-        print("Hello World")
-        print(self.playervar.get())
         if self.playervar.get() in self.userteam.players():
             self.homescore+=num
             self.home_label.configure(text = self.userteam.name +  ": " + str(self.homescore))
