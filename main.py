@@ -77,7 +77,7 @@ class BasketballProgram:
 
         welcome_label = Label(self.welcomeframe, text = "Welcome to NBA simulator 2022")
         welcome_label.grid(row = 0, column = 0, padx =  10, pady = 20)
-        sim_button = Button(self.welcomeframe, text = "Start Season", command = self.changetochoose)
+        sim_button = Button(self.welcomeframe, text = "Start Season", command = lambda: self.changeframe(self.welcomeframe, self.choosingframe))
         sim_button.grid(row =1, column=0, padx = 10, pady = 20)
         self.welcomeframe.pack()
 
@@ -118,7 +118,7 @@ class BasketballProgram:
 
         
         self.standing_count = 1
-        self.tablebacktobhome = Button(self.standingsframe, text = "Back to Home Frame", command = self.changebacktohome)
+        self.tablebacktobhome = Button(self.standingsframe, text = "Back to Home Frame", command = lambda:self.changeframe(self.standingsframe, self.homeframe))
         self.tablebacktobhome.grid(row = 0, column=0, padx=10, pady = 5)
         stats_east = Label(self.standingsframe, text = "Eastern Confrence", relief=RIDGE, bd = 5)
         stats_east.grid(row = 1, column=0, pady= 20)
@@ -207,11 +207,7 @@ class BasketballProgram:
             
 
 
-    
-    def changetochoose(self):
-        self.welcomeframe.pack_forget()
-        self.choosingframe.pack()
-    
+  
     def changetohome(self, x):
         self.choosingframe.pack_forget()
         self.homeframe.pack()
@@ -233,28 +229,20 @@ class BasketballProgram:
         else:
             self.eastcon_pos = self.east_teams.index(self.userteam)
             self.confrence_label.configure(text = "Confrence Standing: " +str(self.eastcon_pos+1)+ "/15")
-        self.table = Button(self.homeframe, text = "League Standings", command=self.changetotable)
+        self.table = Button(self.homeframe, text = "League Standings", command=lambda: self.changeframe(self.homeframe, self.standingsframe))
         self.table.grid(row =2, column = 0, padx=10, pady = 20)
-        self.stats_but = Button(self.homeframe, text = "Player Stats", command=self.changetostats)
+        self.stats_but = Button(self.homeframe, text = "Player Stats", command=lambda: self.changeframe(self.homeframe, self.standingsframe))
         self.stats_but.grid(row = 2, column=1, padx=10, pady =20)
-        self.playgame = Button(self.homeframe, text = "Play Next Game", command=self.changetogame)
+        self.playgame = Button(self.homeframe, text = "Play Next Game", command= self.changetogame)
         self.playgame.grid(row = 2, column=2, padx = 10, pady=20)
     
 
 
-    def changetotable(self):
-        self.homeframe.pack_forget()
-        self.standingsframe.pack()
+    def changeframe(self, f1, f2):
+        f1.pack_forget()
+        f2.pack()
 
-    
-    def changebacktohome(self):
-        self.standingsframe.pack_forget()
-        self.homeframe.pack()
-
-    
-    def changetostats(self):
-        pass
-
+  
     
     def changetogame(self):
         self.homeframe.pack_forget()
