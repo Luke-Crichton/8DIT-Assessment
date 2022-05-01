@@ -110,8 +110,8 @@ class BasketballProgram:
         choose_team_menu.grid(row = 1, column= 0, padx = 10, pady = 20)
         simall = Button(self.choosingframe, text = "Simulate whole league", command=self.wholeleague)
         simall.grid(row=1, column=1, padx = 10, pady = 20)
+    
         
-        self.gamenum = 0
         
 
 
@@ -210,7 +210,9 @@ class BasketballProgram:
   
     def changetohome(self, x):
         self.choosingframe.pack_forget()
+        self.gameframe.pack_forget()
         self.homeframe.pack()
+        self.gamenum = 0
         self.userteam = self.nextteam()
         random.shuffle(self.schedule)
         self.nextgame_label = Label(self.homeframe, text = "Next game: " + self.schedule[self.gamenum].name)
@@ -223,8 +225,9 @@ class BasketballProgram:
 
         self.confrence_label = Label(self.homeframe, text="")
         self.confrence_label.grid(row = 1, column=2, padx = 10, pady =20)
+        
         if self.userteam.division == "Pacific" or self.userteam.division == "Northwest" or self.userteam.division == "Southwest":
-            self.westcon_pos = self.west_teams.index(self.userteam)
+            self.westcon_pos = self.west_teams.index(self.userteam.wins)
             self.confrence_label.configure(text ="Confrence Standing: "+ str(self.westcon_pos+1) +"/15")
         else:
             self.eastcon_pos = self.east_teams.index(self.userteam)
@@ -274,6 +277,13 @@ class BasketballProgram:
 
         self.threept = Button(self.gameframe, text = "3pt", command = lambda: self.addpoints(3))
         self.threept.grid(row = homerb_count+1, column = 0, padx = 10, pady = 20)
+        self.twopt = Button(self.gameframe, text = "2pt", command = lambda: self.addpoints(2))
+        self.twopt.grid(row = homerb_count+1, column = 1, padx = 10, pady = 20)
+        self.freethrow = Button(self.gameframe, text = "Free Throw", command= lambda: self.addpoints(1))
+        self.freethrow.grid(row = homerb_count+2, column = 0, padx = 10, pady = 20)
+        self.finishgame = Button(self.gameframe, text = "Finish Game", command = self.endofgame)
+        self.finishgame.grid(row = homerb_count+2, column=1, padx = 10, pady = 20)
+
     
     def addpoints(self, num):
         if self.playervar.get() in self.userteam.players():
@@ -282,6 +292,17 @@ class BasketballProgram:
         elif self.playervar.get() in self.schedule[self.gamenum].players():
             self.awayscore+=num
             self.away_label.configure(text = self.schedule[self.gamenum].name + ": " + str(self.awayscore))
+    def endofgame(self):
+        if self.homescore > self.awayscore:
+            self.userteam.wins +=1
+        else:
+            self.userteam.losses +=1
+        self.gamenum +=1
+        self.nextgame_label.configure(text = " ")
+        self.changetohome(0)
+
+ 
+
 
 if __name__ == "__main__":
     root = Tk()
