@@ -94,7 +94,7 @@ class BasketballProgram:
         sim_button.grid(row =1, column=0, padx = 10, pady = 20)
         self.welcomeframe.pack()
 
-        choose_label = Label(self.choosingframe, text = "Would you like to follow a team or just watch? ")
+        choose_label = Label(self.choosingframe, text = "Which team would you like to choose? ")
         choose_label.grid(row = 0, columnspan = 2, padx = 10, pady = 20)
         for i in range(len(self.east_teams)):
             self.allnames.append(self.east_teams[i].name)
@@ -120,9 +120,7 @@ class BasketballProgram:
 
 
         choose_team_menu = OptionMenu(self.choosingframe, self.chosenteamvar, *self.allnames, command = self.changetohome)
-        choose_team_menu.grid(row = 1, column= 0, padx = 10, pady = 20)
-        simall = Button(self.choosingframe, text = "Simulate whole league", command=self.wholeleague)
-        simall.grid(row=1, column=1, padx = 10, pady = 20)
+        choose_team_menu.grid(row = 1, columnspan= 2, padx = 10, pady = 20)
         
         
 
@@ -140,6 +138,24 @@ class BasketballProgram:
         loss_east.grid(row = 1, column = 2, pady = 20, padx = 10)
         pct_east = Label(self.standingsframe, text = "Winning PCT%", relief=RIDGE, bd = 5)
         pct_east.grid(row = 1, column = 3, pady = 20, padx = 10)
+        self.east_team_rank = []
+        winning = 0
+        for i in range(len(self.east_teams)):
+            hold_for_big = []
+            winning+=1
+            team_label = Label(self.standingsframe, text = str(winning))
+            team_label.grid(row=2+i, column = 0, padx = 10)
+            hold_for_big.append(team_label)
+            wins_label = Label(self.standingsframe, text = "")
+            wins_label.grid(row =2+i, column=1, padx = 10)
+            hold_for_big.append(wins_label)
+            loss_label = Label(self.standingsframe, text = "")
+            loss_label.grid(row = 2+i, column = 2, padx = 10)
+            hold_for_big.append(loss_label)
+            pct_label = Label(self.standingsframe, text = "1")
+            pct_label.grid(row = 2+i, column = 3, padx = 10)
+            hold_for_big.append(pct_label)
+            self.east_team_rank.append(hold_for_big)
 
 
         self.west_standing_count = 0
@@ -151,7 +167,24 @@ class BasketballProgram:
         loss_west.grid(row = 18, column = 2)
         pct_west = Label(self.standingsframe, text = "Winning PCT%", relief=RIDGE, bd = 5)
         pct_west.grid(row = 18, column = 3, pady = 20, padx = 10)
-        
+        self.west_team_rank = []
+        winning = 0
+        for i in range(len(self.east_teams)):
+            hold_for_big2 = []
+            winning+=1
+            team_label = Label(self.standingsframe, text = str(winning))
+            team_label.grid(row=19+i, column = 0, padx = 10)
+            hold_for_big2.append(team_label)
+            wins_label = Label(self.standingsframe, text = "")
+            wins_label.grid(row =19+i, column=1, padx = 10)
+            hold_for_big2.append(wins_label)
+            loss_label = Label(self.standingsframe, text = "")
+            loss_label.grid(row = 19+i, column = 2, padx = 10)
+            hold_for_big2.append(loss_label)
+            pct_label = Label(self.standingsframe, text = "1")
+            pct_label.grid(row = 19+i, column = 3, padx = 10)
+            hold_for_big2.append(pct_label)
+            self.west_team_rank.append(hold_for_big2)
         
         self.rb_holding_list = []
         
@@ -159,11 +192,6 @@ class BasketballProgram:
             self.awayrb = Radiobutton(self.gameframe, variable=self.playervar, text = " ")
             self.awayrb.grid(row = i+1, column=0, padx = 5, pady = 10)
             self.rb_holding_list.append(self.awayrb)
-
-
-    def wholeleague(self):
-        pass
-
 
     
         
@@ -180,33 +208,33 @@ class BasketballProgram:
             else:
                 self.schedule.append(t)
 
+
+
+
+
+
+
     
 
-
-    def leagueleaders(self, teams, count):
+#standings
+    def leagueleaders(self, teams, widgets):
         self.homeframe.pack_forget()
         self.standingsframe.pack()
         teams.sort(key = lambda x: x.wins, reverse = TRUE)
-        winning = 0
-        for t in teams:
-
-
-            count +=1
-            winning+=1
-            team_label = Label(self.standingsframe, text = str(winning) + ". " + t.name)
-            team_label.grid(row=count, column = 0, padx = 10)
-            wins_label = Label(self.standingsframe, text = str(t.wins))
-            wins_label.grid(row =count, column=1, padx = 10)
-            loss_label = Label(self.standingsframe, text = str(t.losses))
-            loss_label.grid(row =count, column = 2, padx = 10)
-            if t.wins + t.losses > 0:
-
-                pct_label = Label(self.standingsframe, text = str(t.wins/(t.wins+t.losses)),)
-                pct_label.grid(row = count, column= 3, padx = 10)
-            else:
-                pct_label = Label(self.standingsframe, text = "1")
-                pct_label.grid(row = count, column = 3, padx = 10)
+        count = 0
+        for w in widgets:
+            w[0].configure(text = str(count+1) + ". " + teams[count].name)
+            w[1].configure(text = str(teams[count].wins))
+            w[2].configure(text = str(teams[count].losses))
+            if teams[count].wins + teams[count].losses != 0:
+                w[3].configure(text = str(round(teams[count].wins/(teams[count].wins + teams[count].losses), 3)))
+            count+=1
         
+        
+
+
+
+
     
 
     def divisionleaders(self):
@@ -262,7 +290,7 @@ class BasketballProgram:
             self.confrence_label.configure(text = "Confrence Standing: " +str(self.eastcon_pos)+ "/15")
         
         
-        self.table = Button(self.homeframe, text = "League Standings", command= lambda: [self.leagueleaders(self.east_teams, 2), self.leagueleaders(self.west_teams, 19)])
+        self.table = Button(self.homeframe, text = "League Standings", command= lambda: [self.leagueleaders(self.east_teams, self.east_team_rank), self.leagueleaders(self.west_teams, self.west_team_rank)])
         self.table.grid(row =2, column = 0, padx=10, pady = 20)
         self.stats_but = Button(self.homeframe, text = "Player Stats", command=lambda: self.changeframe(self.homeframe, self.standingsframe))
         self.stats_but.grid(row = 2, column=1, padx=10, pady =20)
@@ -293,7 +321,7 @@ class BasketballProgram:
             
         
 
-        
+        self.playervar.set(" ")
         self.homerb_count = 1
         for i in self.userteam.players():
             self.homerb = Radiobutton(self.gameframe, value = i, text = i, variable=self.playervar)
@@ -346,7 +374,8 @@ class BasketballProgram:
                 else:
                     a.losses += 1
         self.gamenum +=1
-        self.changetohome(0)
+        
+        
         if self.userteam.division == "Pacific" or self.userteam.division == "Northwest" or self.userteam.division == "Southwest":
             self.westcon_pos = self.west_teams.index(self.userteam) + 1
             self.confrence_label.configure(text ="Confrence Standing: "+ str(self.westcon_pos) +"/15")
@@ -359,6 +388,7 @@ class BasketballProgram:
         self.nextgame_label.configure(text = "Next game: " + self.schedule[self.gamenum].name)
         self.away_label.configure(text = self.schedule[self.gamenum].name + ": " + str(self.awayscore))
         self.home_label.configure(text = self.userteam.name +  ": " + str(self.homescore))
+        self.changetohome(0)
 if __name__ == "__main__":
     root = Tk()
     bball = BasketballProgram(root)
