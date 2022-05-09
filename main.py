@@ -318,6 +318,7 @@ class BasketballProgram:
         self.gameframe.pack()
         self.homescore = 0
         self.awayscore = 0
+        self.awayteamplayers = self.schedule[self.gamenum].players()
         self.away_label.configure(text = self.schedule[self.gamenum].name + ": " + str(self.awayscore))
         self.away_label.grid(row=0, column=0, padx = 10, pady = 20)
         self.home_label.configure(text = self.userteam.name +  ": " + str(self.homescore))
@@ -343,7 +344,7 @@ class BasketballProgram:
 
     def awayrb_refresh(self):
         self.awayrb_count = 0
-        for i in self.schedule[self.gamenum].players():
+        for i in self.awayteamplayers:
             self.away_rb_holding_list[self.awayrb_count].configure(text = i.name + ": " + str(i.gametotal), value = i.name, variable = self.playervar)
             self.awayrb_count+=1
     def home_rb_refresh(self):
@@ -383,7 +384,7 @@ class BasketballProgram:
                         self.home_rb_refresh()
                     else:
                         messagebox.showerror("Missed", a.name + " has a Free Throw point PCT of " + str(a.ftpct) + "% and he missed!")
-        for t in self.schedule[self.gamenum].players():
+        for t in self.awayteamplayers:
             if self.playervar.get() == t.name:
                 if num == 3:
                     if inorout <= t.threepct:
@@ -424,6 +425,12 @@ class BasketballProgram:
                         a.wins+=1
                     else:
                         a.losses += 1
+            for i in self.teamplayers:
+                i.seasontotal = i.gametotal
+                i.gametotal = 0
+            for i in self.awayteamplayers:
+                i.seasontotal = i.gametotal
+                i.gametotal = 0
             self.gamenum +=1
             
 
@@ -444,6 +451,12 @@ class BasketballProgram:
                         a.wins+=1
                     else:
                         a.losses += 1
+            for i in self.teamplayers:
+                i.seasontotal = i.gametotal
+                i.gametotal = 0
+            for i in self.awayteamplayers:
+                i.seasontotal = i.gametotal
+                i.gametotal = 0
             self.gamenum +=1
             
 
