@@ -2,10 +2,11 @@ class SupportAndStats:
     def __init__(self, name, gametotal, seasontotal, threepct, fgpct, ftpct):
         self.name = name
         self.gametotal = gametotal
-        self.seasonaltotal = seasontotal
+        self.seasontotal = seasontotal
         self.threepct = threepct
         self.fgpct = fgpct
         self.ftpct = ftpct
+        
 
 class PlayersAndTeams:
 

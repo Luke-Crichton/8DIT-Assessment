@@ -4,21 +4,24 @@ import random
 from tkinter import messagebox
 
 class BasketballSupport:
-    def __init__(self, name, division, players, wins, losses):
+    def __init__(self, name, division, players, wins, losses, maincolour, accentcolour):
         self.name = name
         self.division = division
         self.players = players
         self.wins = wins
         self.losses = losses
+        self.maincolour = maincolour
+        self.accentcolour = accentcolour
         
 
 class BasketballProgram:
     def __init__(self, parent):
-        self.welcomeframe = Frame(parent)
+        self.welcomeframe = Frame(parent, bg = "#1d428a")
         self.standingsframe = Frame(parent)
-        self.choosingframe = Frame(parent)
+        self.choosingframe = Frame(parent, bg = "#1d428a")
         self.homeframe = Frame(parent)
         self.gameframe = Frame(parent)
+        self.ppgframe = Frame(parent)
 
 
 
@@ -56,10 +59,10 @@ class BasketballProgram:
 
 
 
-        self.east_teams.append(BasketballSupport("Boston Celtics", "Atlantic", nbateams.PlayersAndTeams.boston, 0, 0))
-        self.east_teams.append(BasketballSupport("Brooklyn Nets", "Atlantic", nbateams.PlayersAndTeams.brooklyn, 0, 0))
-        self.east_teams.append(BasketballSupport("New York Knicks", "Atlantic", nbateams.PlayersAndTeams.newyork, 0, 0))
-        self.east_teams.append(BasketballSupport("Philadelphia 76ers", "Atlantic", nbateams.PlayersAndTeams.philly, 0, 0))
+        self.east_teams.append(BasketballSupport("Boston Celtics", "Atlantic", nbateams.PlayersAndTeams.boston, 0, 0, "#008348", "#ffffff"))
+        self.east_teams.append(BasketballSupport("Brooklyn Nets", "Atlantic", nbateams.PlayersAndTeams.brooklyn, 0, 0, "#000000", "#ffffff"))
+        self.east_teams.append(BasketballSupport("New York Knicks", "Atlantic", nbateams.PlayersAndTeams.newyork, 0, 0, "##006bb6","#f58426"))
+        self.east_teams.append(BasketballSupport("Philadelphia 76ers", "Atlantic", nbateams.PlayersAndTeams.philly, 0, 0, "#006bb6", "#ed174c"))
         self.east_teams.append(BasketballSupport("Toronto Raptors", "Atlantic", nbateams.PlayersAndTeams.toronto, 0, 0))
         self.east_teams.append(BasketballSupport("Chicago Bulls", "Central", nbateams.PlayersAndTeams.chicago, 0, 0))
         self.east_teams.append(BasketballSupport("Cleveland Cavaliers", "Central", nbateams.PlayersAndTeams.cleveland, 0, 0))
@@ -120,7 +123,7 @@ class BasketballProgram:
 
 
 
-        choose_team_menu = OptionMenu(self.choosingframe, self.chosenteamvar, *self.allnames, command = self.changetohome)
+        choose_team_menu = OptionMenu(self.choosingframe, self.chosenteamvar, *self.allnames, command = lambda x:self.changetohome(0,0))
         choose_team_menu.grid(row = 1, columnspan= 2, padx = 10, pady = 20)
         
         
@@ -189,6 +192,7 @@ class BasketballProgram:
         
         self.away_rb_holding_list = []
         self.home_rb_holding_list = []
+        self.ppg_label_holding_list = []
         
         for i in range(5):
             self.awayrb = Radiobutton(self.gameframe, variable=self.playervar, text = " ")
@@ -198,6 +202,14 @@ class BasketballProgram:
             self.homerb = Radiobutton(self.gameframe, variable = self.playervar, text = " ")
             self.homerb.grid(row = i+1, column = 1, padx= 5, pady = 10)
             self.home_rb_holding_list.append(self.homerb)
+        
+        for i in range(5):
+            self.ppg_label = Label(self.ppgframe, text = " ")
+            self.ppg_label.grid(row = i+12, columnspan= 3, padx = 5, pady=10)
+            self.ppg_label_holding_list.append(self.ppg_label)
+        
+
+
 
 
     
@@ -270,11 +282,14 @@ class BasketballProgram:
 
 
   
-    def changetohome(self, x):
+    def changetohome(self, x, y):
         self.choosingframe.pack_forget()
         self.homeframe.pack()
-        self.gamenum = 0
-        self.nextteam()
+        if x  == 0:
+            self.gamenum = 0
+            self.nextteam()
+        
+        
 
         random.shuffle(self.schedule)
         self.nextgame_label.grid(row = 0, columnspan=3, padx = 10, pady = 20)
@@ -290,6 +305,8 @@ class BasketballProgram:
         self.confrence_label.grid(row = 1, column=2, padx = 10, pady =20)
         self.west_teams.sort(key = lambda x:x.wins, reverse = TRUE)
         self.east_teams.sort(key = lambda x:x.wins, reverse=TRUE)
+
+        
         
         if self.userteam in self.west_teams:
             self.confrence_label.configure(text ="Confrence Standing: "+ str(self.west_teams.index(self.userteam) + 1) +"/15")
@@ -299,10 +316,28 @@ class BasketballProgram:
         
         self.table = Button(self.homeframe, text = "League Standings", command= lambda: [self.leagueleaders(self.east_teams, self.east_team_rank), self.leagueleaders(self.west_teams, self.west_team_rank)])
         self.table.grid(row =2, column = 0, padx=10, pady = 20)
-        self.stats_but = Button(self.homeframe, text = "Player Stats", command=lambda: self.changeframe(self.homeframe, self.standingsframe))
+        self.stats_but = Button(self.homeframe, text = "Player Stats", command=self.ppg)
         self.stats_but.grid(row = 2, column=1, padx=10, pady =20)
         self.playgame = Button(self.homeframe, text = "Play Next Game", command= self.changetogame)
         self.playgame.grid(row = 2, column=2, padx = 10, pady=20)
+        
+    def ppg(self):
+        self.homeframe.pack_forget()
+        self.ppgframe.pack()
+        self.ppgbacktohome = Button(self.ppgframe, text = "Back to Home Frame", command = lambda:self.changeframe(self.ppgframe, self.homeframe), anchor = NW)
+        self.ppgbacktohome.grid(row = 0, column=0, padx=5, pady = 5)
+        self.stat_label = Label(self.ppgframe, text = "Points Per Game Leaders for the " + self.userteam.name, font = ("Courier","14", "bold"))
+        self.stat_label.grid(row = 1, columnspan=3, padx = 10, pady = 5)
+        if self.userteam.wins + self.userteam.losses != 0:
+            self.teamplayers.sort(key = lambda x: x.seasontotal/(self.userteam.wins+self.userteam.losses), reverse = TRUE)
+            for i in self.teamplayers:
+                print(i.seasontotal)
+                self.ppg_label_holding_list[self.teamplayers.index(i)].configure(text = i.name + ": "+str(i.seasontotal/(self.userteam.wins+self.userteam.losses))+ " PPG")
+        else:
+            for i in self.teamplayers:
+                self.ppg_label_holding_list[self.teamplayers.index(i)].configure(text = i.name +": "+"0 PPG")
+            
+        
     
 
 
@@ -357,7 +392,6 @@ class BasketballProgram:
     
     def addpoints(self, num):
         inorout = random.randint(1,100)
-        print(inorout)
         for a in self.teamplayers:
             if self.playervar.get() == a.name:
                 if num == 3:
@@ -426,19 +460,17 @@ class BasketballProgram:
                     else:
                         a.losses += 1
             for i in self.teamplayers:
-                i.seasontotal = i.gametotal
+                i.seasontotal += i.gametotal
                 i.gametotal = 0
             for i in self.awayteamplayers:
-                i.seasontotal = i.gametotal
+                i.seasontotal += i.gametotal
                 i.gametotal = 0
             self.gamenum +=1
-            
-
             
             self.nextgame_label.configure(text = "Next game: " + self.schedule[self.gamenum].name)
             self.away_label.configure(text = self.schedule[self.gamenum].name + ": " + str(self.awayscore))
             self.home_label.configure(text = self.userteam.name +  ": " + str(self.homescore))
-            self.changetohome(0)        
+            self.changetohome(1, 0)        
         elif self.homescore < self.awayscore:
             self.userteam.losses += 1
             self.schedule[self.gamenum].wins+=1
@@ -464,7 +496,7 @@ class BasketballProgram:
             self.nextgame_label.configure(text = "Next game: " + self.schedule[self.gamenum].name)
             self.away_label.configure(text = self.schedule[self.gamenum].name + ": " + str(self.awayscore))
             self.home_label.configure(text = self.userteam.name +  ": " + str(self.homescore))
-            self.changetohome(0)
+            self.changetohome(1,0)
         else:
             messagebox.showerror("Tie", "In basketball, there are no ties. Play until there is a winner!")
         
