@@ -239,22 +239,22 @@ class BasketballProgram:
 
     def divisionleaders(self):
         if self.userteam.division == "Atlantic":
-            self.atlanticdiv.sort(key = lambda x:x.wins)
+            self.atlanticdiv.sort(key = lambda x:x.wins, reverse=TRUE)
             return self.atlanticdiv.index(self.userteam)
         elif self.userteam.division == "Central":
-            self.centraldiv.sort(key = lambda x:x.wins)
+            self.centraldiv.sort(key = lambda x:x.wins, reverse=TRUE)
             return self.centraldiv.index(self.userteam)
         elif self.userteam.division == "Southeast":
-            self.southeastdiv.sort(key = lambda x:x.wins)
+            self.southeastdiv.sort(key = lambda x:x.wins, reverse=TRUE)
             return self.southeastdiv.index(self.userteam)
         elif self.userteam.division == "Pacific":
-            self.pacificdiv.sort(key = lambda x:x.wins)
+            self.pacificdiv.sort(key = lambda x:x.wins, reverse=TRUE)
             return self.pacificdiv.index(self.userteam)
         elif self.userteam.division == "Northwest":
-            self.northwestdiv.sort(key = lambda x:x.wins)
+            self.northwestdiv.sort(key = lambda x:x.wins, reverse=TRUE)
             return self.northwestdiv.index(self.userteam)
         elif self.userteam.division == "Southwest":
-            self.southwestdiv.sort(key = lambda x:x.wins)
+            self.southwestdiv.sort(key = lambda x:x.wins, reverse=TRUE)
             return self.southwestdiv.index(self.userteam)
 
 
@@ -280,14 +280,13 @@ class BasketballProgram:
 
         self.confrence_label = Label(self.homeframe, text="")
         self.confrence_label.grid(row = 1, column=2, padx = 10, pady =20)
+        self.west_teams.sort(key = lambda x:x.wins, reverse = TRUE)
+        self.east_teams.sort(key = lambda x:x.wins, reverse=TRUE)
         
-        if self.userteam.division == "Pacific" or self.userteam.division == "Northwest" or self.userteam.division == "Southwest":
-            self.westcon_pos = self.west_teams.index(self.userteam) + 1
-            self.confrence_label.configure(text ="Confrence Standing: "+ str(self.westcon_pos) +"/15")
-            
-        else:
-            self.eastcon_pos = self.east_teams.index(self.userteam) + 1
-            self.confrence_label.configure(text = "Confrence Standing: " +str(self.eastcon_pos)+ "/15")
+        if self.userteam in self.west_teams:
+            self.confrence_label.configure(text ="Confrence Standing: "+ str(self.west_teams.index(self.userteam) + 1) +"/15")
+        elif self.userteam in self.east_teams:
+            self.confrence_label.configure(text = "Confrence Standing: " +str(self.east_teams.index(self.userteam) + 1)+ "/15")
         
         
         self.table = Button(self.homeframe, text = "League Standings", command= lambda: [self.leagueleaders(self.east_teams, self.east_team_rank), self.leagueleaders(self.west_teams, self.west_team_rank)])
@@ -375,14 +374,6 @@ class BasketballProgram:
                     a.losses += 1
         self.gamenum +=1
         
-        
-        if self.userteam.division == "Pacific" or self.userteam.division == "Northwest" or self.userteam.division == "Southwest":
-            self.westcon_pos = self.west_teams.index(self.userteam) + 1
-            self.confrence_label.configure(text ="Confrence Standing: "+ str(self.westcon_pos) +"/15")
-            
-        else:
-            self.eastcon_pos = self.east_teams.index(self.userteam) + 1
-            self.confrence_label.configure(text = "Confrence Standing: " +str(self.eastcon_pos)+ "/15")
 
         
         self.nextgame_label.configure(text = "Next game: " + self.schedule[self.gamenum].name)
