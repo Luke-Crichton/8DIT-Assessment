@@ -39,6 +39,7 @@ class BasketballProgram:
         self.awayrb = Radiobutton(self.gameframe, variable=self.playervar)
         self.homescore = 0
         self.awayscore = 0
+        self.teamplayers = 0
 
         
         self.atlanticdiv = []
@@ -55,37 +56,37 @@ class BasketballProgram:
 
 
 
-        self.east_teams.append(BasketballSupport("Boston Celtics", "Atlantic", nbateams.boston, 0, 0))
-        self.east_teams.append(BasketballSupport("Brooklyn Nets", "Atlantic", nbateams.brooklyn, 0, 0))
-        self.east_teams.append(BasketballSupport("New York Knicks", "Atlantic", nbateams.newyork, 0, 0))
-        self.east_teams.append(BasketballSupport("Philadelphia 76ers", "Atlantic", nbateams.philly, 0, 0))
-        self.east_teams.append(BasketballSupport("Toronto Raptors", "Atlantic", nbateams.toronto, 0, 0))
-        self.east_teams.append(BasketballSupport("Chicago Bulls", "Central", nbateams.chicago, 0, 0))
-        self.east_teams.append(BasketballSupport("Cleveland Cavaliers", "Central", nbateams.cleveland, 0, 0))
-        self.east_teams.append(BasketballSupport("Detroit Pistons", "Central", nbateams.detroit, 0, 0))
-        self.east_teams.append(BasketballSupport("Indiana Pacers", "Central", nbateams.indiana, 0, 0))
-        self.east_teams.append(BasketballSupport("Milwaukee Bucks", "Central", nbateams.milwaukee, 0, 0))
-        self.east_teams.append(BasketballSupport("Atlanta Hawks", "Southeast", nbateams.atlanta, 0, 0))
-        self.east_teams.append(BasketballSupport("Charlotte Hornets", "Southeast", nbateams.charlotte, 0, 0))
-        self.east_teams.append(BasketballSupport("Miami Heat", "Southeast", nbateams.chicago, 0, 0))
-        self.east_teams.append(BasketballSupport("Orlando Magic", "Southeast", nbateams.orlando, 0, 0))
-        self.east_teams.append(BasketballSupport("Washington Wizards", "Southeast", nbateams.washington, 0, 0))
+        self.east_teams.append(BasketballSupport("Boston Celtics", "Atlantic", nbateams.PlayersAndTeams.boston, 0, 0))
+        self.east_teams.append(BasketballSupport("Brooklyn Nets", "Atlantic", nbateams.PlayersAndTeams.brooklyn, 0, 0))
+        self.east_teams.append(BasketballSupport("New York Knicks", "Atlantic", nbateams.PlayersAndTeams.newyork, 0, 0))
+        self.east_teams.append(BasketballSupport("Philadelphia 76ers", "Atlantic", nbateams.PlayersAndTeams.philly, 0, 0))
+        self.east_teams.append(BasketballSupport("Toronto Raptors", "Atlantic", nbateams.PlayersAndTeams.toronto, 0, 0))
+        self.east_teams.append(BasketballSupport("Chicago Bulls", "Central", nbateams.PlayersAndTeams.chicago, 0, 0))
+        self.east_teams.append(BasketballSupport("Cleveland Cavaliers", "Central", nbateams.PlayersAndTeams.cleveland, 0, 0))
+        self.east_teams.append(BasketballSupport("Detroit Pistons", "Central", nbateams.PlayersAndTeams.detroit, 0, 0))
+        self.east_teams.append(BasketballSupport("Indiana Pacers", "Central", nbateams.PlayersAndTeams.indiana, 0, 0))
+        self.east_teams.append(BasketballSupport("Milwaukee Bucks", "Central", nbateams.PlayersAndTeams.milwaukee, 0, 0))
+        self.east_teams.append(BasketballSupport("Atlanta Hawks", "Southeast", nbateams.PlayersAndTeams.atlanta, 0, 0))
+        self.east_teams.append(BasketballSupport("Charlotte Hornets", "Southeast", nbateams.PlayersAndTeams.charlotte, 0, 0))
+        self.east_teams.append(BasketballSupport("Miami Heat", "Southeast", nbateams.PlayersAndTeams.chicago, 0, 0))
+        self.east_teams.append(BasketballSupport("Orlando Magic", "Southeast", nbateams.PlayersAndTeams.orlando, 0, 0))
+        self.east_teams.append(BasketballSupport("Washington Wizards", "Southeast", nbateams.PlayersAndTeams.washington, 0, 0))
 
-        self.west_teams.append(BasketballSupport("Golden State Warriors", "Pacific", nbateams.golden, 0, 0))
-        self.west_teams.append(BasketballSupport("Los Angeles Clippers", "Pacific", nbateams.lac, 0, 0))
-        self.west_teams.append(BasketballSupport("Los Angeles Lakers", "Pacific", nbateams.lal, 0, 0))
-        self.west_teams.append(BasketballSupport("Pheonix Suns", "Pacific", nbateams.pheonix, 0, 0))
-        self.west_teams.append(BasketballSupport("Sacramento Kings", "Pacific", nbateams.sac, 0, 0))
-        self.west_teams.append(BasketballSupport("Denver Nuggets", "Northwest", nbateams.denver, 0, 0))
-        self.west_teams.append(BasketballSupport("Minnesota Timberwolves", "Northwest", nbateams.min, 0, 0))
-        self.west_teams.append(BasketballSupport("Oklahoma City Thunder", "Northwest", nbateams.oklahoma, 0, 0))
-        self.west_teams.append(BasketballSupport("Portland Trail Blazers", "Northwest", nbateams.portland, 0, 0))
-        self.west_teams.append(BasketballSupport("Utah Jazz", "Northwest", nbateams.utah, 0, 0))
-        self.west_teams.append(BasketballSupport("Dallas Mavreicks", "Southwest", nbateams.dallas, 0, 0))
-        self.west_teams.append(BasketballSupport("Houston Rockets", "Southwest", nbateams.houston, 0, 0))
-        self.west_teams.append(BasketballSupport("Memphis Grizzlies", "Southwest", nbateams.memphis, 0, 0))
-        self.west_teams.append(BasketballSupport("New Orleans Pelicans", "Southwest", nbateams.new_orleans, 0, 0))
-        self.west_teams.append(BasketballSupport("San Antonio Spurs", "Southwest", nbateams.san_antonio, 0, 0))
+        self.west_teams.append(BasketballSupport("Golden State Warriors", "Pacific", nbateams.PlayersAndTeams.golden, 0, 0))
+        self.west_teams.append(BasketballSupport("Los Angeles Clippers", "Pacific", nbateams.PlayersAndTeams.lac, 0, 0))
+        self.west_teams.append(BasketballSupport("Los Angeles Lakers", "Pacific", nbateams.PlayersAndTeams.lal, 0, 0))
+        self.west_teams.append(BasketballSupport("Pheonix Suns", "Pacific", nbateams.PlayersAndTeams.pheonix, 0, 0))
+        self.west_teams.append(BasketballSupport("Sacramento Kings", "Pacific", nbateams.PlayersAndTeams.sac, 0, 0))
+        self.west_teams.append(BasketballSupport("Denver Nuggets", "Northwest", nbateams.PlayersAndTeams.denver, 0, 0))
+        self.west_teams.append(BasketballSupport("Minnesota Timberwolves", "Northwest", nbateams.PlayersAndTeams.min, 0, 0))
+        self.west_teams.append(BasketballSupport("Oklahoma City Thunder", "Northwest", nbateams.PlayersAndTeams.oklahoma, 0, 0))
+        self.west_teams.append(BasketballSupport("Portland Trail Blazers", "Northwest", nbateams.PlayersAndTeams.portland, 0, 0))
+        self.west_teams.append(BasketballSupport("Utah Jazz", "Northwest", nbateams.PlayersAndTeams.utah, 0, 0))
+        self.west_teams.append(BasketballSupport("Dallas Mavreicks", "Southwest", nbateams.PlayersAndTeams.dallas, 0, 0))
+        self.west_teams.append(BasketballSupport("Houston Rockets", "Southwest", nbateams.PlayersAndTeams.houston, 0, 0))
+        self.west_teams.append(BasketballSupport("Memphis Grizzlies", "Southwest", nbateams.PlayersAndTeams.memphis, 0, 0))
+        self.west_teams.append(BasketballSupport("New Orleans Pelicans", "Southwest", nbateams.PlayersAndTeams.new_orleans, 0, 0))
+        self.west_teams.append(BasketballSupport("San Antonio Spurs", "Southwest", nbateams.PlayersAndTeams.san_antonio, 0, 0))
 
 
         welcome_label = Label(self.welcomeframe, text = "Welcome to NBA simulator 2022")
@@ -186,12 +187,18 @@ class BasketballProgram:
             hold_for_big2.append(pct_label)
             self.west_team_rank.append(hold_for_big2)
         
-        self.rb_holding_list = []
+        self.away_rb_holding_list = []
+        self.home_rb_holding_list = []
         
         for i in range(5):
             self.awayrb = Radiobutton(self.gameframe, variable=self.playervar, text = " ")
             self.awayrb.grid(row = i+1, column=0, padx = 5, pady = 10)
-            self.rb_holding_list.append(self.awayrb)
+            self.away_rb_holding_list.append(self.awayrb)
+        for i in range(5):
+            self.homerb = Radiobutton(self.gameframe, variable = self.playervar, text = " ")
+            self.homerb.grid(row = i+1, column = 1, padx= 5, pady = 10)
+            self.home_rb_holding_list.append(self.homerb)
+
 
     
         
@@ -204,6 +211,7 @@ class BasketballProgram:
             if t.name == self.chosenteamvar.get():
                 root.title(t.name)
                 self.userteam = t
+                self.teamplayers = t.players()
                 
             else:
                 self.schedule.append(t)
@@ -320,66 +328,134 @@ class BasketballProgram:
             
         
 
-        self.playervar.set(" ")
-        self.homerb_count = 1
-        for i in self.userteam.players():
-            self.homerb = Radiobutton(self.gameframe, value = i, text = i, variable=self.playervar)
-            self.homerb.grid(row = self.homerb_count, column=1, padx = 5, pady=10)
-            self.homerb_count+=1
         
-
+        self.home_rb_refresh()
+        self.playervar.set(" ")
 
         self.threept = Button(self.gameframe, text = "3pt", command = lambda: self.addpoints(3))
-        self.threept.grid(row = self.homerb_count+1, column = 0, padx = 10, pady = 20)
+        self.threept.grid(row = 7, column = 0, padx = 10, pady = 20)
         self.twopt = Button(self.gameframe, text = "2pt", command = lambda: self.addpoints(2))
-        self.twopt.grid(row = self.homerb_count+1, column = 1, padx = 10, pady = 20)
+        self.twopt.grid(row = 7, column = 1, padx = 10, pady = 20)
         self.freethrow = Button(self.gameframe, text = "Free Throw", command= lambda: self.addpoints(1))
-        self.freethrow.grid(row = self.homerb_count+2, column = 0, padx = 10, pady = 20)
+        self.freethrow.grid(row = 8, column = 0, padx = 10, pady = 20)
         self.finishgame = Button(self.gameframe, text = "Finish Game", command = self.refresher)
-        self.finishgame.grid(row = self.homerb_count+2, column=1, padx = 10, pady = 20)
+        self.finishgame.grid(row = 8, column=1, padx = 10, pady = 20)
+
     def awayrb_refresh(self):
         self.awayrb_count = 0
         for i in self.schedule[self.gamenum].players():
-            self.rb_holding_list[self.awayrb_count].configure(text = i, value = i, variable = self.playervar)
+            self.away_rb_holding_list[self.awayrb_count].configure(text = i.name + ": " + str(i.gametotal), value = i.name, variable = self.playervar)
             self.awayrb_count+=1
+    def home_rb_refresh(self):
+        self.homerb_count = 0
+        for i in self.teamplayers:
+            self.home_rb_holding_list[self.homerb_count].configure(text = i.name + ": " + str(i.gametotal), value = i.name, variable = self.playervar)
+            self.homerb_count+=1
 
 
     
     def addpoints(self, num):
-        if self.playervar.get() in self.userteam.players():
-            self.homescore+=num
-            self.home_label.configure(text = self.userteam.name +  ": " + str(self.homescore))
-        elif self.playervar.get() in self.schedule[self.gamenum].players():
-            self.awayscore+=num
-            self.away_label.configure(text = self.schedule[self.gamenum].name + ": " + str(self.awayscore))
+        inorout = random.randint(1,100)
+        print(inorout)
+        for a in self.teamplayers:
+            if self.playervar.get() == a.name:
+                if num == 3:
+                    if inorout <= a.threepct:
+                        self.homescore+=num
+                        a.gametotal += num
+                        self.home_label.configure(text = self.userteam.name +  ": " + str(self.homescore))
+                        self.home_rb_refresh()
+                    else:
+                        messagebox.showerror("Missed", a.name + " has a 3 point PCT of " + str(a.threepct) + "% and he missed!")
+                elif num == 2:
+                    if inorout <= a.fgpct:
+                        self.homescore+=num
+                        a.gametotal += num
+                        self.home_label.configure(text = self.userteam.name +  ": " + str(self.homescore))
+                        self.home_rb_refresh()
+                    else:
+                        messagebox.showerror("Missed", a.name + " has a Field goal PCT of " + str(a.fgpct) + "% and he missed!")
+                elif num == 1:
+                    if inorout <= a.ftpct:
+                        self.homescore+=num
+                        a.gametotal += num
+                        self.home_label.configure(text = self.userteam.name +  ": " + str(self.homescore))
+                        self.home_rb_refresh()
+                    else:
+                        messagebox.showerror("Missed", a.name + " has a Free Throw point PCT of " + str(a.ftpct) + "% and he missed!")
+        for t in self.schedule[self.gamenum].players():
+            if self.playervar.get() == t.name:
+                if num == 3:
+                    if inorout <= t.threepct:
+                        self.awayscore+=num
+                        t.gametotal += num
+                        self.away_label.configure(text = self.schedule[self.gamenum].name +  ": " + str(self.awayscore))
+                        self.awayrb_refresh()
+                    else:
+                        messagebox.showerror("Missed", t.name + " has a 3 point PCT of " + str(t.threepct) + "% and he missed!")
+                elif num == 2:
+                    if inorout <= t.fgpct:
+                        self.awayscore+=num
+                        t.gametotal += num
+                        self.away_label.configure(text = self.schedule[self.gamenum].name +  ": " + str(self.awayscore))
+                        self.awayrb_refresh()
+                    else:
+                        messagebox.showerror("Missed", t.name + " has a 3 point PCT of " + str(t.fgpct) + "% and he missed!")
+                elif num == 1:
+                    if inorout <= a.ftpct:
+                        self.awayscore+=num
+                        t.gametotal += num
+                        self.away_label.configure(text = self.schedule[self.gamenum].name +  ": " + str(self.awayscore))
+                        self.awayrb_refresh()
+                    else:
+                        messagebox.showerror("Missed", t.name + " has a 3 point PCT of " + str(t.ftpct) + "% and he missed!")
+
 
     def refresher(self):
         if self.homescore > self.awayscore:
             self.userteam.wins += 1
             self.schedule[self.gamenum].losses +=1
+            self.gameframe.pack_forget()
+            self.homeframe.pack()
+            random.shuffle(self.allteams)
+            for a in self.allteams:
+                if a.name != self.schedule[self.gamenum].name and a.name != self.userteam.name:
+                    if self.allteams.index(a)+1 < 15.5:
+                        a.wins+=1
+                    else:
+                        a.losses += 1
+            self.gamenum +=1
+            
+
+            
+            self.nextgame_label.configure(text = "Next game: " + self.schedule[self.gamenum].name)
+            self.away_label.configure(text = self.schedule[self.gamenum].name + ": " + str(self.awayscore))
+            self.home_label.configure(text = self.userteam.name +  ": " + str(self.homescore))
+            self.changetohome(0)        
         elif self.homescore < self.awayscore:
             self.userteam.losses += 1
             self.schedule[self.gamenum].wins+=1
+            self.gameframe.pack_forget()
+            self.homeframe.pack()
+            random.shuffle(self.allteams)
+            for a in self.allteams:
+                if a.name != self.schedule[self.gamenum].name and a.name != self.userteam.name:
+                    if self.allteams.index(a)+1 < 15.5:
+                        a.wins+=1
+                    else:
+                        a.losses += 1
+            self.gamenum +=1
+            
+
+            
+            self.nextgame_label.configure(text = "Next game: " + self.schedule[self.gamenum].name)
+            self.away_label.configure(text = self.schedule[self.gamenum].name + ": " + str(self.awayscore))
+            self.home_label.configure(text = self.userteam.name +  ": " + str(self.homescore))
+            self.changetohome(0)
         else:
             messagebox.showerror("Tie", "In basketball, there are no ties. Play until there is a winner!")
         
-        self.gameframe.pack_forget()
-        self.homeframe.pack()
-        random.shuffle(self.allteams)
-        for a in self.allteams:
-            if a.name != self.schedule[self.gamenum].name and a.name != self.userteam.name:
-                if self.allteams.index(a)+1 < 15.5:
-                    a.wins+=1
-                else:
-                    a.losses += 1
-        self.gamenum +=1
         
-
-        
-        self.nextgame_label.configure(text = "Next game: " + self.schedule[self.gamenum].name)
-        self.away_label.configure(text = self.schedule[self.gamenum].name + ": " + str(self.awayscore))
-        self.home_label.configure(text = self.userteam.name +  ": " + str(self.homescore))
-        self.changetohome(0)
 if __name__ == "__main__":
     root = Tk()
     bball = BasketballProgram(root)
