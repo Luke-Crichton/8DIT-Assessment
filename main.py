@@ -4,21 +4,22 @@ import random
 from tkinter import messagebox
 
 class BasketballSupport:
-    def __init__(self, name, division, players, wins, losses, maincolour, accentcolour):
+    def __init__(self, name, division, players, wins, losses):
         self.name = name
         self.division = division
         self.players = players
         self.wins = wins
         self.losses = losses
-        self.maincolour = maincolour
-        self.accentcolour = accentcolour
         
 
 class BasketballProgram:
     def __init__(self, parent):
-        self.welcomeframe = Frame(parent, bg = "#1d428a")
+        parent.option_add('*font', 'Roboto 12')
+        parent.option_add('*Foreground', '#ffffff')
+        parent.option_add('*Background', '#0d47a1')
+        self.welcomeframe = Frame(parent)
         self.standingsframe = Frame(parent)
-        self.choosingframe = Frame(parent, bg = "#1d428a")
+        self.choosingframe = Frame(parent)
         self.homeframe = Frame(parent)
         self.gameframe = Frame(parent)
         self.ppgframe = Frame(parent)
@@ -59,10 +60,10 @@ class BasketballProgram:
 
 
 
-        self.east_teams.append(BasketballSupport("Boston Celtics", "Atlantic", nbateams.PlayersAndTeams.boston, 0, 0, "#008348", "#ffffff"))
-        self.east_teams.append(BasketballSupport("Brooklyn Nets", "Atlantic", nbateams.PlayersAndTeams.brooklyn, 0, 0, "#000000", "#ffffff"))
-        self.east_teams.append(BasketballSupport("New York Knicks", "Atlantic", nbateams.PlayersAndTeams.newyork, 0, 0, "##006bb6","#f58426"))
-        self.east_teams.append(BasketballSupport("Philadelphia 76ers", "Atlantic", nbateams.PlayersAndTeams.philly, 0, 0, "#006bb6", "#ed174c"))
+        self.east_teams.append(BasketballSupport("Boston Celtics", "Atlantic", nbateams.PlayersAndTeams.boston, 0, 0))
+        self.east_teams.append(BasketballSupport("Brooklyn Nets", "Atlantic", nbateams.PlayersAndTeams.brooklyn, 0, 0))
+        self.east_teams.append(BasketballSupport("New York Knicks", "Atlantic", nbateams.PlayersAndTeams.newyork, 0, 0))
+        self.east_teams.append(BasketballSupport("Philadelphia 76ers", "Atlantic", nbateams.PlayersAndTeams.philly, 0, 0))
         self.east_teams.append(BasketballSupport("Toronto Raptors", "Atlantic", nbateams.PlayersAndTeams.toronto, 0, 0))
         self.east_teams.append(BasketballSupport("Chicago Bulls", "Central", nbateams.PlayersAndTeams.chicago, 0, 0))
         self.east_teams.append(BasketballSupport("Cleveland Cavaliers", "Central", nbateams.PlayersAndTeams.cleveland, 0, 0))
