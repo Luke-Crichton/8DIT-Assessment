@@ -3,6 +3,7 @@ from tkinter import *
 import random
 from tkinter import messagebox
 
+
 class BasketballSupport:
     def __init__(self, name, division, players, wins, losses):
         self.name = name
@@ -10,7 +11,7 @@ class BasketballSupport:
         self.players = players
         self.wins = wins
         self.losses = losses
-        
+
 
 class BasketballProgram:
     def __init__(self, parent):
@@ -23,8 +24,6 @@ class BasketballProgram:
         self.homeframe = Frame(parent)
         self.gameframe = Frame(parent)
         self.ppgframe = Frame(parent)
-
-
 
         self.west_teams = []
         self.east_teams = []
@@ -45,7 +44,6 @@ class BasketballProgram:
         self.awayscore = 0
         self.teamplayers = 0
 
-        
         self.atlanticdiv = []
         self.centraldiv = []
         self.southeastdiv = []
@@ -53,12 +51,6 @@ class BasketballProgram:
         self.pacificdiv = []
         self.northwestdiv = []
         self.southwestdiv = []
-
-
-
-
-
-
 
         self.east_teams.append(BasketballSupport("Boston Celtics", "Atlantic", nbateams.PlayersAndTeams.boston, 0, 0))
         self.east_teams.append(BasketballSupport("Brooklyn Nets", "Atlantic", nbateams.PlayersAndTeams.brooklyn, 0, 0))
@@ -92,9 +84,8 @@ class BasketballProgram:
         self.west_teams.append(BasketballSupport("New Orleans Pelicans", "Southwest", nbateams.PlayersAndTeams.new_orleans, 0, 0))
         self.west_teams.append(BasketballSupport("San Antonio Spurs", "Southwest", nbateams.PlayersAndTeams.san_antonio, 0, 0))
 
-
         welcome_label = Label(self.welcomeframe, text = "Welcome to NBA simulator 2022")
-        welcome_label.grid(row = 0, column = 0, padx =  10, pady = 20)
+        welcome_label.grid(row = 0, column = 0, padx = 10, pady = 20)
         sim_button = Button(self.welcomeframe, text = "Start Season", command = lambda: self.changeframe(self.welcomeframe, self.choosingframe))
         sim_button.grid(row =1, column=0, padx = 10, pady = 20)
         self.welcomeframe.pack()
@@ -119,22 +110,13 @@ class BasketballProgram:
                 self.northwestdiv.append(d)
             else:
                 self.southwestdiv.append(d)
-        
 
-
-
-
-        choose_team_menu = OptionMenu(self.choosingframe, self.chosenteamvar, *self.allnames, command = lambda x:self.changetohome(0,0))
+        choose_team_menu = OptionMenu(self.choosingframe, self.chosenteamvar, *self.allnames, command = lambda x: self.changetohome(0, 0))
         choose_team_menu.grid(row = 1, columnspan= 2, padx = 10, pady = 20)
-        
-        
 
-
-
-        
         self.east_standing_count = 1
-        self.tablebacktobhome = Button(self.standingsframe, text = "Back to Home Frame", command = lambda:self.changeframe(self.standingsframe, self.homeframe))
-        self.tablebacktobhome.grid(row = 0, column=0, padx=10, pady = 5)
+        self.tablebacktobhome = Button(self.standingsframe, text = "Back to Home Frame", command = lambda: self.changeframe(self.standingsframe, self.homeframe))
+        self.tablebacktobhome.grid(row = 0, column = 0, padx = 10, pady = 5)
         stats_east = Label(self.standingsframe, text = "Eastern Confrence", relief=RIDGE, bd = 5)
         stats_east.grid(row = 1, column=0, pady= 20)
         wins_east = Label(self.standingsframe, text = "Wins", relief=RIDGE, bd = 5)
@@ -147,7 +129,7 @@ class BasketballProgram:
         winning = 0
         for i in range(len(self.east_teams)):
             hold_for_big = []
-            winning+=1
+            winning += 1
             team_label = Label(self.standingsframe, text = str(winning))
             team_label.grid(row=2+i, column = 0, padx = 10)
             hold_for_big.append(team_label)
@@ -162,7 +144,6 @@ class BasketballProgram:
             hold_for_big.append(pct_label)
             self.east_team_rank.append(hold_for_big)
 
-
         self.west_standing_count = 0
         stats_west = Label(self.standingsframe, text = "Western Confrence", relief=RIDGE, bd = 5)
         stats_west.grid(row = 18, column=0, pady= 20, padx = 10)
@@ -176,7 +157,7 @@ class BasketballProgram:
         winning = 0
         for i in range(len(self.east_teams)):
             hold_for_big2 = []
-            winning+=1
+            winning += 1
             team_label = Label(self.standingsframe, text = str(winning))
             team_label.grid(row=19+i, column = 0, padx = 10)
             hold_for_big2.append(team_label)
@@ -190,11 +171,11 @@ class BasketballProgram:
             pct_label.grid(row = 19+i, column = 3, padx = 10)
             hold_for_big2.append(pct_label)
             self.west_team_rank.append(hold_for_big2)
-        
+
         self.away_rb_holding_list = []
         self.home_rb_holding_list = []
         self.ppg_label_holding_list = []
-        
+
         for i in range(5):
             self.awayrb = Radiobutton(self.gameframe, variable=self.playervar, text = " ", command=self.showpct)
             self.awayrb.grid(row = i+1, column=0, padx = 5, pady = 10)
@@ -203,7 +184,7 @@ class BasketballProgram:
             self.homerb = Radiobutton(self.gameframe, variable = self.playervar, text = " ", command=self.showpct)
             self.homerb.grid(row = i+1, column = 1, padx= 5, pady = 10)
             self.home_rb_holding_list.append(self.homerb)
-        
+
         for i in range(5):
             self.ppg_label = Label(self.ppgframe, text = " ")
             self.ppg_label.grid(row = i+12, columnspan= 3, padx = 5, pady=10)
@@ -214,16 +195,6 @@ class BasketballProgram:
         self.twopt.grid(row = 7, column = 1, padx = 10, pady = 20)
         self.freethrow = Button(self.gameframe, text = "Free Throw", command= lambda: self.addpoints(1))
         self.freethrow.grid(row = 8, column = 0, padx = 10, pady = 20)
-        
-
-
-
-
-    
-        
-
-
-
 
     def nextteam(self):
         for t in self.allteams:
@@ -231,19 +202,11 @@ class BasketballProgram:
                 root.title(t.name)
                 self.userteam = t
                 self.teamplayers = t.players()
-                
+
             else:
                 self.schedule.append(t)
 
-
-
-
-
-
-
-    
-
-#standings
+# standings
     def leagueleaders(self, teams, widgets):
         self.homeframe.pack_forget()
         self.standingsframe.pack()
@@ -255,105 +218,81 @@ class BasketballProgram:
             w[2].configure(text = str(teams[count].losses))
             if teams[count].wins + teams[count].losses != 0:
                 w[3].configure(text = str(round(teams[count].wins/(teams[count].wins + teams[count].losses), 3)))
-            count+=1
-        
-        
-
-
-
-
-    
+            count += 1
 
     def divisionleaders(self):
         if self.userteam.division == "Atlantic":
-            self.atlanticdiv.sort(key = lambda x:x.wins, reverse=TRUE)
+            self.atlanticdiv.sort(key = lambda x: x.wins, reverse=TRUE)
             return self.atlanticdiv.index(self.userteam)
         elif self.userteam.division == "Central":
-            self.centraldiv.sort(key = lambda x:x.wins, reverse=TRUE)
+            self.centraldiv.sort(key = lambda x: x.wins, reverse=TRUE)
             return self.centraldiv.index(self.userteam)
         elif self.userteam.division == "Southeast":
-            self.southeastdiv.sort(key = lambda x:x.wins, reverse=TRUE)
+            self.southeastdiv.sort(key = lambda x: x.wins, reverse=TRUE)
             return self.southeastdiv.index(self.userteam)
         elif self.userteam.division == "Pacific":
-            self.pacificdiv.sort(key = lambda x:x.wins, reverse=TRUE)
+            self.pacificdiv.sort(key = lambda x: x.wins, reverse=TRUE)
             return self.pacificdiv.index(self.userteam)
         elif self.userteam.division == "Northwest":
-            self.northwestdiv.sort(key = lambda x:x.wins, reverse=TRUE)
+            self.northwestdiv.sort(key = lambda x: x.wins, reverse=TRUE)
             return self.northwestdiv.index(self.userteam)
         elif self.userteam.division == "Southwest":
-            self.southwestdiv.sort(key = lambda x:x.wins, reverse=TRUE)
+            self.southwestdiv.sort(key = lambda x: x.wins, reverse=TRUE)
             return self.southwestdiv.index(self.userteam)
 
-
-            
-
-
-  
     def changetohome(self, x, y):
         self.choosingframe.pack_forget()
         self.homeframe.pack()
-        if x  == 0:
+        if x == 0:
             self.gamenum = 0
             self.nextteam()
-        
-        
 
         random.shuffle(self.schedule)
         self.nextgame_label.grid(row = 0, columnspan=3, padx = 10, pady = 20)
         self.nextgame_label.configure(text = "Next game: " + self.schedule[self.gamenum].name)
-        
+
         self.div_pos = self.divisionleaders()
         self.record_label = Label(self.homeframe, text = "Record: " + str(self.userteam.wins) + " - " + str(self.userteam.losses))
         self.record_label.grid(row = 1, column = 0, padx = 10, pady = 20)
-        self.division_label = Label(self.homeframe, text = "Division Standing: " +str(self.div_pos+1)+"/5") 
+        self.division_label = Label(self.homeframe, text = "Division Standing: " + str(self.div_pos+1) + "/5")
         self.division_label.grid(row = 1, column = 1, padx = 10, pady = 20)
 
         self.confrence_label = Label(self.homeframe, text="")
         self.confrence_label.grid(row = 1, column=2, padx = 10, pady =20)
-        self.west_teams.sort(key = lambda x:x.wins, reverse = TRUE)
-        self.east_teams.sort(key = lambda x:x.wins, reverse=TRUE)
+        self.west_teams.sort(key = lambda x: x.wins, reverse = TRUE)
+        self.east_teams.sort(key = lambda x: x.wins, reverse=TRUE)
 
-        
-        
         if self.userteam in self.west_teams:
-            self.confrence_label.configure(text ="Confrence Standing: "+ str(self.west_teams.index(self.userteam) + 1) +"/15")
+            self.confrence_label.configure(text = "Confrence Standing: " + str(self.west_teams.index(self.userteam) + 1) + "/15")
         elif self.userteam in self.east_teams:
-            self.confrence_label.configure(text = "Confrence Standing: " +str(self.east_teams.index(self.userteam) + 1)+ "/15")
-        
-        
+            self.confrence_label.configure(text = "Confrence Standing: " + str(self.east_teams.index(self.userteam) + 1) + "/15")
+
         self.table = Button(self.homeframe, text = "League Standings", command= lambda: [self.leagueleaders(self.east_teams, self.east_team_rank), self.leagueleaders(self.west_teams, self.west_team_rank)])
         self.table.grid(row =2, column = 0, padx=10, pady = 20)
         self.stats_but = Button(self.homeframe, text = "Player Stats", command=self.ppg)
         self.stats_but.grid(row = 2, column=1, padx=10, pady =20)
         self.playgame = Button(self.homeframe, text = "Play Next Game", command= self.changetogame)
         self.playgame.grid(row = 2, column=2, padx = 10, pady=20)
-        
+
     def ppg(self):
         self.homeframe.pack_forget()
         self.ppgframe.pack()
-        self.ppgbacktohome = Button(self.ppgframe, text = "Back to Home Frame", command = lambda:self.changeframe(self.ppgframe, self.homeframe), anchor = NW)
+        self.ppgbacktohome = Button(self.ppgframe, text = "Back to Home Frame", command = lambda: self.changeframe(self.ppgframe, self.homeframe), anchor = NW)
         self.ppgbacktohome.grid(row = 0, column=0, padx=5, pady = 5)
-        self.stat_label = Label(self.ppgframe, text = "Points Per Game Leaders for the " + self.userteam.name, font = ("Roboto", "12","bold"))
+        self.stat_label = Label(self.ppgframe, text = "Points Per Game Leaders for the " + self.userteam.name, font = ("Roboto", "12", "bold"))
         self.stat_label.grid(row = 1, columnspan=3, padx = 10, pady = 5)
         if self.userteam.wins + self.userteam.losses != 0:
             self.teamplayers.sort(key = lambda x: x.seasontotal/(self.userteam.wins+self.userteam.losses), reverse = TRUE)
             for i in self.teamplayers:
-                self.ppg_label_holding_list[self.teamplayers.index(i)].configure(text = i.name + ": "+str(i.seasontotal/(self.userteam.wins+self.userteam.losses))+ " PPG")
+                self.ppg_label_holding_list[self.teamplayers.index(i)].configure(text = i.name + ": " + str(i.seasontotal/(self.userteam.wins+self.userteam.losses)) + " PPG")
         else:
             for i in self.teamplayers:
-                self.ppg_label_holding_list[self.teamplayers.index(i)].configure(text = i.name +": "+"0 PPG")
-            
-        
-    
-
+                self.ppg_label_holding_list[self.teamplayers.index(i)].configure(text = i.name + ": " + "0 PPG")
 
     def changeframe(self, f1, f2):
         f1.pack_forget()
         f2.pack()
-        
 
-  
-    
     def changetogame(self):
         self.homeframe.pack_forget()
         self.gameframe.pack()
@@ -362,15 +301,11 @@ class BasketballProgram:
         self.awayteamplayers = self.schedule[self.gamenum].players()
         self.away_label.configure(text = self.schedule[self.gamenum].name + ": " + str(self.awayscore))
         self.away_label.grid(row=0, column=0, padx = 10, pady = 20)
-        self.home_label.configure(text = self.userteam.name +  ": " + str(self.homescore))
+        self.home_label.configure(text = self.userteam.name + ": " + str(self.homescore))
         self.home_label.grid(row = 0, column=1, padx=10, pady =20)
-        
-        self.awayrb_refresh()
-        
-            
-        
 
-        
+        self.awayrb_refresh()
+
         self.home_rb_refresh()
         self.playervar.set(" ")
 
@@ -378,48 +313,46 @@ class BasketballProgram:
         self.twopt.configure(text = "2pt")
         self.freethrow.configure(text = "Free Throw")
 
-        
         self.finishgame = Button(self.gameframe, text = "Finish Game", command = self.refresher)
-        self.finishgame.grid(row = 8, column=1, padx = 10, pady = 20)
+        self.finishgame.grid(row = 8, column = 1, padx = 10, pady = 20)
+
     def awayrb_refresh(self):
         self.awayrb_count = 0
         for i in self.awayteamplayers:
             self.away_rb_holding_list[self.awayrb_count].configure(text = i.name + ": " + str(i.gametotal), value = i.name, variable = self.playervar)
-            self.awayrb_count+=1
+            self.awayrb_count += 1
+
     def home_rb_refresh(self):
         self.homerb_count = 0
         for i in self.teamplayers:
             self.home_rb_holding_list[self.homerb_count].configure(text = i.name + ": " + str(i.gametotal), value = i.name, variable = self.playervar)
-            self.homerb_count+=1
-        
+            self.homerb_count += 1
 
-
-    
     def addpoints(self, num):
         inorout = random.randint(1, 100)
         for a in self.teamplayers:
             if self.playervar.get() == a.name:
                 if num == 3:
                     if inorout <= a.threepct:
-                        self.homescore+=num
+                        self.homescore += num
                         a.gametotal += num
-                        self.home_label.configure(text = self.userteam.name +  ": " + str(self.homescore))
+                        self.home_label.configure(text = self.userteam.name + ": " + str(self.homescore))
                         self.home_rb_refresh()
                     else:
                         messagebox.showerror("Missed", a.name + " has a 3 point PCT of " + str(a.threepct) + "% and he missed!")
                 elif num == 2:
                     if inorout <= a.fgpct:
-                        self.homescore+=num
+                        self.homescore += num
                         a.gametotal += num
-                        self.home_label.configure(text = self.userteam.name +  ": " + str(self.homescore))
+                        self.home_label.configure(text = self.userteam.name + ": " + str(self.homescore))
                         self.home_rb_refresh()
                     else:
                         messagebox.showerror("Missed", a.name + " has a Field goal PCT of " + str(a.fgpct) + "% and he missed!")
                 elif num == 1:
                     if inorout <= a.ftpct:
-                        self.homescore+=num
+                        self.homescore += num
                         a.gametotal += num
-                        self.home_label.configure(text = self.userteam.name +  ": " + str(self.homescore))
+                        self.home_label.configure(text = self.userteam.name + ": " + str(self.homescore))
                         self.home_rb_refresh()
                     else:
                         messagebox.showerror("Missed", a.name + " has a Free Throw point PCT of " + str(a.ftpct) + "% and he missed!")
@@ -427,28 +360,29 @@ class BasketballProgram:
             if self.playervar.get() == t.name:
                 if num == 3:
                     if inorout <= t.threepct:
-                        self.awayscore+=num
+                        self.awayscore += num
                         t.gametotal += num
-                        self.away_label.configure(text = self.schedule[self.gamenum].name +  ": " + str(self.awayscore))
+                        self.away_label.configure(text = self.schedule[self.gamenum].name + ": " + str(self.awayscore))
                         self.awayrb_refresh()
                     else:
                         messagebox.showerror("Missed", t.name + " has a 3 point PCT of " + str(t.threepct) + "% and he missed!")
                 elif num == 2:
                     if inorout <= t.fgpct:
-                        self.awayscore+=num
+                        self.awayscore += num
                         t.gametotal += num
-                        self.away_label.configure(text = self.schedule[self.gamenum].name +  ": " + str(self.awayscore))
+                        self.away_label.configure(text = self.schedule[self.gamenum].name + ": " + str(self.awayscore))
                         self.awayrb_refresh()
                     else:
                         messagebox.showerror("Missed", t.name + " has a Field Goal PCT of " + str(t.fgpct) + "% and he missed!")
                 elif num == 1:
                     if inorout <= a.ftpct:
-                        self.awayscore+=num
+                        self.awayscore += num
                         t.gametotal += num
-                        self.away_label.configure(text = self.schedule[self.gamenum].name +  ": " + str(self.awayscore))
+                        self.away_label.configure(text = self.schedule[self.gamenum].name + ": " + str(self.awayscore))
                         self.awayrb_refresh()
                     else:
                         messagebox.showerror("Missed", t.name + " has a Free Throw PCT of " + str(t.ftpct) + "% and he missed!")
+
     def showpct(self):
         for a in self.teamplayers:
             if a.name == self.playervar.get():
@@ -461,158 +395,94 @@ class BasketballProgram:
                 self.twopt.configure(text = "2pt ({}%)".format(a.fgpct))
                 self.freethrow.configure(text = "Free Throw ({}%)".format(a.ftpct))
 
-
-
-
     def refresher(self):
-        self.gamenum = 29
-#Users team wins
-        if self.homescore > self.awayscore:
-            if self.gamenum < len(self.schedule):
+        if self.gamenum < len(self.schedule):
+            if self.homescore > self.awayscore:
                 self.userteam.wins += 1
-                self.schedule[self.gamenum].losses +=1
-                random.shuffle(self.allteams)
-                for a in self.allteams:
-                    if a.name != self.schedule[self.gamenum].name and a.name != self.userteam.name:
-                        if self.allteams.index(a)+1 < 15.5:
-                            a.wins+=1
-                        else:
-                            a.losses += 1
-                for i in self.teamplayers:
-                    i.seasontotal += i.gametotal
-                    i.gametotal = 0
-                for i in self.awayteamplayers:
-                    i.seasontotal += i.gametotal
-                    i.gametotal = 0
-                
-                self.nextgame_label.configure(text = "Next game: " + self.schedule[self.gamenum].name)
-                self.away_label.configure(text = self.schedule[self.gamenum].name + ": " + str(self.awayscore))
-                self.home_label.configure(text = self.userteam.name +  ": " + str(self.homescore))
-                
-                self.gamenum +=1
-                self.changetohome(1, 0)
-#Final game
-            elif self.gamenum == len(self.schedule):
-                self.userteam.wins += 1
-                self.schedule[self.gamenum-1].losses +=1
-                random.shuffle(self.allteams)
-                for a in self.allteams:
-                    if a.name != self.schedule[self.gamenum-1].name and a.name != self.userteam.name:
-                        if self.allteams.index(a)+1 < 15.5:
-                            a.wins+=1
-                        else:
-                            a.losses += 1
-                for i in self.teamplayers:
-                    i.seasontotal += i.gametotal
-                    i.gametotal = 0
-                for i in self.awayteamplayers:
-                    i.seasontotal += i.gametotal
-                    i.gametotal = 0
-                self.east_teams.sort(key = lambda x:x.wins, reverse=TRUE)
-                self.west_teams.sort(key = lambda x:x.wins, reverse=TRUE)
-#If users team is in the east
-                if self.userteam in self.east_teams:
-                    if self.east_teams.index(self.userteam) == 0:
-                        self.homeframe.pack()
-                        self.gameframe.pack_forget()
-                        self.nextgame_label.configure(text = "Final vs {}".format(self.west_teams[0].name))
-                        self.playgame.configure(command=lambda: self.finishedfinal(self.west_teams))
-                        
-                        self.record_label = Label(self.homeframe, text = "Record: " + str(self.userteam.wins) + " - " + str(self.userteam.losses))
-                        self.record_label.grid(row = 1, column = 0, padx = 10, pady = 20)
-                        self.division_label = Label(self.homeframe, text = "Division Standing: " + str(1)+"/5") 
-                        self.division_label.grid(row = 1, column = 1, padx = 10, pady = 20)
-                        self.confrence_label = Label(self.homeframe, text="")
-                        self.confrence_label.grid(row = 1, column=2, padx = 10, pady =20)
-                        self.west_teams.sort(key = lambda x:x.wins, reverse = TRUE)
-                        self.east_teams.sort(key = lambda x:x.wins, reverse=TRUE)
-                        self.confrence_label.configure(text ="Confrence Standing: "+ str(1) +"/15")
-                    else:
-                        self.finishednofinal(self.east_teams)
+                self.schedule[self.gamenum].losses += 1
+            elif self.homescore < self.awayscore:
+                self.userteam.losses += 1
+                self.schedule[self.gamenum].wins += 1
+            else:
+                messagebox.showerror("Tie", "In basketball, there are no ties. Play until there is a winner!")
 
-                else:
-                    if self.west_teams.index(self.userteam) == 0:
-                        self.homeframe.pack()
-                        self.gameframe.pack_forget()
-                        self.nextgame_label.configure(text = "Final vs {}".format(self.east_teams[0].name))
-                        self.playgame.configure(command=lambda: self.finishedfinal(self.east_teams))
-                        
-                        self.record_label = Label(self.homeframe, text = "Record: " + str(self.userteam.wins) + " - " + str(self.userteam.losses))
-                        self.record_label.grid(row = 1, column = 0, padx = 10, pady = 20)
-                        self.division_label = Label(self.homeframe, text = "Division Standing: " +str(1)+"/5") 
-                        self.division_label.grid(row = 1, column = 1, padx = 10, pady = 20)
-                        self.confrence_label = Label(self.homeframe, text="")
-                        self.confrence_label.grid(row = 1, column=2, padx = 10, pady =20)
-                        self.west_teams.sort(key = lambda x:x.wins, reverse = TRUE)
-                        self.east_teams.sort(key = lambda x:x.wins, reverse=TRUE)
-                        self.confrence_label.configure(text ="Confrence Standing: "+ str(1) +"/15")
-#If users team wins confrence
-                    else:
-#If they dont
-                        self.finishednofinal(self.west_teams)
-#If user's team loses
-        elif self.homescore < self.awayscore:
-            self.userteam.losses += 1
-            self.schedule[self.gamenum].wins+=1
             random.shuffle(self.allteams)
             for a in self.allteams:
                 if a.name != self.schedule[self.gamenum].name and a.name != self.userteam.name:
                     if self.allteams.index(a)+1 < 15.5:
-                        a.wins+=1
+                        a.wins += 1
                     else:
                         a.losses += 1
             for i in self.teamplayers:
-                i.seasontotal = i.gametotal
+                i.seasontotal += i.gametotal
                 i.gametotal = 0
-            for i in self.awayteamplayers:
-                i.seasontotal = i.gametotal
-                i.gametotal = 0
+            self.nextgame_label.configure(text = "Next game: " + self.schedule[self.gamenum].name)
             self.away_label.configure(text = self.schedule[self.gamenum].name + ": " + str(self.awayscore))
-            self.home_label.configure(text = self.userteam.name +  ": " + str(self.homescore))
-            self.east_teams.sort(key = lambda x:x.wins, reverse=TRUE)
-            self.west_teams.sort(key = lambda x:x.wins, reverse=TRUE)
-#If users team is in the east
+            self.home_label.configure(text = self.userteam.name + ": " + str(self.homescore))
+            self.gameframe.pack_forget()
+            self.homeframe.pack()
+            self.gamenum += 1
+            self.changetohome(1, 0)
+# Final game
+        elif self.gamenum == len(self.schedule):
+            if self.homescore > self.awayscore:
+                self.userteam.wins += 1
+                self.schedule[self.gamenum].losses += 1
+            elif self.homescore < self.awayscore:
+                self.userteam.losses += 1
+                self.schedule[self.gamenum].wins += 1
+            else:
+                messagebox.showerror("Tie", "In basketball, there are no ties. Play until there is a winner!")
+            random.shuffle(self.allteams)
+            for a in self.allteams:
+                if a.name != self.schedule[self.gamenum].name and a.name != self.userteam.name:
+                    if self.allteams.index(a)+1 < 15.5:
+                        a.wins += 1
+                    else:
+                        a.losses += 1
+            for i in self.teamplayers:
+                i.seasontotal += i.gametotal
+                i.gametotal = 0
+            self.east_teams.sort(key = lambda x: x.wins, reverse=TRUE)
+            self.west_teams.sort(key = lambda x: x.wins, reverse=TRUE)
+# If users team is in the east
             if self.userteam in self.east_teams:
                 if self.east_teams.index(self.userteam) == 0:
                     self.homeframe.pack()
                     self.gameframe.pack_forget()
                     self.nextgame_label.configure(text = "Final vs {}".format(self.west_teams[0].name))
                     self.playgame.configure(command=lambda: self.finishedfinal(self.west_teams))
-                    
+
                     self.record_label = Label(self.homeframe, text = "Record: " + str(self.userteam.wins) + " - " + str(self.userteam.losses))
                     self.record_label.grid(row = 1, column = 0, padx = 10, pady = 20)
-                    self.division_label = Label(self.homeframe, text = "Division Standing: " +str(1)+"/5") 
+                    self.division_label = Label(self.homeframe, text = "Division Standing: " + str(1)+"/5")
                     self.division_label.grid(row = 1, column = 1, padx = 10, pady = 20)
                     self.confrence_label = Label(self.homeframe, text="")
                     self.confrence_label.grid(row = 1, column=2, padx = 10, pady =20)
-                    self.west_teams.sort(key = lambda x:x.wins, reverse = TRUE)
-                    self.east_teams.sort(key = lambda x:x.wins, reverse=TRUE)
-                    self.confrence_label.configure(text ="Confrence Standing: "+ str(1) +"/15")
+                    self.west_teams.sort(key = lambda x: x.wins, reverse = TRUE)
+                    self.east_teams.sort(key = lambda x: x.wins, reverse=TRUE)
+                    self.confrence_label.configure(text ="Confrence Standing: " + str(1) + "/15")
                 else:
                     self.finishednofinal(self.east_teams)
             else:
                 if self.west_teams.index(self.userteam) == 0:
-                    self.nextgame_label.configure(text = "Final vs {}".format(self.west_teams[0].name))
-                    self.playgame.configure(command=lambda: self.finishedfinal(self.east_teams))
-                    self.gameframe.pack_forget() 
                     self.homeframe.pack()
-                    self.div_pos = self.divisionleaders()
+                    self.gameframe.pack_forget()
+                    self.nextgame_label.configure(text = "Final vs {}".format(self.east_teams[0].name))
+                    self.playgame.configure(command=lambda: self.finishedfinal(self.east_teams))
                     self.record_label = Label(self.homeframe, text = "Record: " + str(self.userteam.wins) + " - " + str(self.userteam.losses))
                     self.record_label.grid(row = 1, column = 0, padx = 10, pady = 20)
-                    self.division_label = Label(self.homeframe, text = "Division Standing: " +str(1)+"/5") 
+                    self.division_label = Label(self.homeframe, text = "Division Standing: " +str(1) + "/5")
                     self.division_label.grid(row = 1, column = 1, padx = 10, pady = 20)
                     self.confrence_label = Label(self.homeframe, text="")
                     self.confrence_label.grid(row = 1, column=2, padx = 10, pady =20)
-                    self.west_teams.sort(key = lambda x:x.wins, reverse = TRUE)
-                    self.east_teams.sort(key = lambda x:x.wins, reverse=TRUE)
-                    self.confrence_label.configure(text ="Confrence Standing: "+ str(1) +"/15")
+                    self.west_teams.sort(key = lambda x: x.wins, reverse = TRUE)
+                    self.east_teams.sort(key = lambda x: x.wins, reverse = TRUE)
+                    self.confrence_label.configure(text ="Confrence Standing: " + str(1) + "/15")
+# If users team wins confrence
                 else:
                     self.finishednofinal(self.west_teams)
-#If users team wins confrence
-            
-        else:
-            messagebox.showerror("Tie", "In basketball, there are no ties. Play until there is a winner!")
-
+# If they don't
 
     def finishednofinal(self, list):
         reply = messagebox.askquestion("Finished Game", "{} finished {}/15, not making the Finals, would you like to see your standings?".format(self.userteam.name, list.index(self.userteam)+1))
@@ -625,14 +495,14 @@ class BasketballProgram:
             self.div_pos = self.divisionleaders()
             self.record_label = Label(self.homeframe, text = "Record: " + str(self.userteam.wins) + " - " + str(self.userteam.losses))
             self.record_label.grid(row = 1, column = 0, padx = 10, pady = 20)
-            self.division_label = Label(self.homeframe, text = "Division Standing: " +str(self.div_pos+1)+"/5") 
+            self.division_label = Label(self.homeframe, text = "Division Standing: " + str(self.div_pos + 1) + "/5")
             self.division_label.grid(row = 1, column = 1, padx = 10, pady = 20)
             self.confrence_label = Label(self.homeframe, text="")
             self.confrence_label.grid(row = 1, column=2, padx = 10, pady =20)
-            self.west_teams.sort(key = lambda x:x.wins, reverse = TRUE)
-            self.east_teams.sort(key = lambda x:x.wins, reverse=TRUE)
-            self.confrence_label.configure(text ="Confrence Standing: "+ str(list.index(self.userteam) + 1) +"/15")
-            self.playgame.configure(command=lambda:root.destroy(), text = "Finish Playing")
+            self.west_teams.sort(key = lambda x: x.wins, reverse = TRUE)
+            self.east_teams.sort(key = lambda x: x.wins, reverse=TRUE)
+            self.confrence_label.configure(text ="Confrence Standing: " + str(list.index(self.userteam) + 1) + " /15")
+            self.playgame.configure(command=lambda: root.destroy(), text = "Finish Playing")
 
     def finishedfinal(self, list):
         self.homeframe.pack_forget()
@@ -642,27 +512,22 @@ class BasketballProgram:
         self.awayteamplayers = list[0].players()
         self.finalsawayteam = list[0].name
         self.away_label.configure(text = self.finalsawayteam + ": " + str(self.awayscore))
-        self.away_label.grid(row=0, column=0, padx = 10, pady = 20)
-        self.home_label.configure(text = self.userteam.name +  ": " + str(self.homescore))
+        self.away_label.grid(row = 0, column = 0, padx = 10, pady = 20)
+        self.home_label.configure(text = self.userteam.name + ": " + str(self.homescore))
         self.home_label.grid(row = 0, column=1, padx=10, pady =20)
-        
-        self.awayrb_refresh()
-        
-            
-        
 
-        
+        self.awayrb_refresh()
+
         self.home_rb_refresh()
+
         self.playervar.set(" ")
 
         self.threept.configure(text = "3pt")
         self.twopt.configure(text = "2pt")
         self.freethrow.configure(text = "Free Throw")
-        end = ""
-
-        
         self.finishgame = Button(self.gameframe, text = "Finish Game", command = self.winner)
         self.finishgame.grid(row = 8, column=1, padx = 10, pady = 20)
+
     def winner(self):
         if self.homescore > self.awayscore:
             end = messagebox.askquestion("Finished", "The {} finished {}/30, would you like to quit?".format(self.userteam.name, 1))
@@ -670,7 +535,7 @@ class BasketballProgram:
                 self.homeframe.pack()
                 self.gameframe.pack_forget()
                 self.nextgame_label.configure(text = "Season has Finished, the {} won the title!".format(self.userteam.name))
-                self.playgame.configure(command=lambda:root.destroy(), text = "Finish Playing")
+                self.playgame.configure(command = lambda: root.destroy(), text = "Finish Playing")
             else:
                 root.destroy()
         elif self.homescore < self.awayscore:
@@ -679,20 +544,12 @@ class BasketballProgram:
                 self.homeframe.pack()
                 self.gameframe.pack_forget()
                 self.nextgame_label.configure(text = "Season has Finished, the {} won the title!".format(self.finalsawayteam))
-                self.playgame.configure(command=lambda:root.destroy(), text = "Finish Playing")
+                self.playgame.configure(command = lambda: root.destroy(), text = "Finish Playing")
             else:
                 root.destroy()
         else:
             messagebox.showerror("Tie", "In basketball, there are no ties. Play until there is a winner!")
 
-
-
-        
-        
-
-
-        
-        
 if __name__ == "__main__":
     root = Tk()
     bball = BasketballProgram(root)
