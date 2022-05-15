@@ -1,4 +1,5 @@
 class SupportAndStats:
+    # Support class to create each players shooting pct and their game and season totals.
     def __init__(self, name, gametotal, seasontotal, threepct, fgpct, ftpct):
         self.name = name
         self.gametotal = gametotal
@@ -9,8 +10,10 @@ class SupportAndStats:
         
 
 class PlayersAndTeams:
-
     def boston():
+        # Each method in this class is the same, creating a list for the team members then going through their best starting 5
+        # Creating obejcts containing every players irl shooting percentages and their names and totals for games and seasons.
+        # The function the returns the list so that I am able to access the objects in the other file
         boston_list = []
         boston_list.append(SupportAndStats("Marcus Smart", 0, 0, 33, 42, 79))
         boston_list.append(SupportAndStats("Jaylen Brown", 0, 0, 36, 47, 76))
